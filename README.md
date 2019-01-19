@@ -35,7 +35,6 @@ cd aks_advnet_rbac
 terraform init
 ```
 
-Then you can do either a Terraform plan or apply
 
 You will need to provide a Service Principal ClientID and Secret for the Cluster to use. If you have the proper permissions in your AAD you can run the following:
 ```
@@ -53,6 +52,8 @@ The output is similar to the following example. Make a note of your own `appId` 
   "tenant": "72f988bf-86f1-41af-91ab-2d7cd011db48"
 }
 ```
+Once you have the info needed then you can do either a `terraform plan` or `terraform apply`
+
 
 ### License
 MIT License
