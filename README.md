@@ -1,1 +1,1 @@
-Lab files for https://aka.ms/citadel/terraform workshop.
+My sample Terraform template to deploy an AKS cluster with Advanced Networking, Azure Monitoring and Kubernetes RBAC enabled.
