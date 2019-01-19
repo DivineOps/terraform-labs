@@ -27,6 +27,33 @@ az aks get-versions --location <region_you_plan_to_use> -o table
 
 This will list the versions currently supported by AKS including Minor and Patch versions. Use your choise in the variabled named k8sVer in the [variables.tf](/aks_advnet_rbac/variables.tf) file.
 
+* Intialize your Terraform to get the latest plugins needed
+
+CD into the cloned repo and then into the aks_advnet_rbac folder and run your terraform init to ge the latest AzureRM providers
+```
+cd aks_advnet_rbac
+terraform init
+```
+
+Then you can do either a Terraform plan or apply
+
+You will need to provide a Service Principal ClientID and Secret for the Cluster to use. If you have the proper permissions in your AAD you can run the following:
+```
+az ad sp create-for-rbac --skip-assignment
+```
+
+The output is similar to the following example. Make a note of your own `appId` and `password`. These values are used when run `terraform plan` or `terraform apply` when asked.
+
+```json
+{
+  "appId": "559513bd-0c19-4c1a-87cd-851a26afd5fc",
+  "displayName": "azure-cli-2018-09-25-21-10-19",
+  "name": "http://azure-cli-2018-09-25-21-10-19",
+  "password": "e763725a-5eee-40e8-a466-dc88d980f415",
+  "tenant": "72f988bf-86f1-41af-91ab-2d7cd011db48"
+}
+```
+
 ### License
 MIT License
 
