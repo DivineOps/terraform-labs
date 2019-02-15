@@ -16,25 +16,25 @@ resource "azurerm_resource_group" "test" {
 #   }
 # }
 
-resource "azurerm_log_analytics_workspace" "test" {
-  name                = "${var.prefix}-law"
-  location            = "${azurerm_resource_group.test.location}"
-  resource_group_name = "${azurerm_resource_group.test.name}"
-  sku                 = "Free"
-}
+# resource "azurerm_log_analytics_workspace" "test" {
+#   name                = "${var.prefix}-law"
+#   location            = "${azurerm_resource_group.test.location}"
+#   resource_group_name = "${azurerm_resource_group.test.name}"
+#   sku                 = "Free"
+# }
 
-resource "azurerm_log_analytics_solution" "test" {
-  solution_name         = "ContainerInsights"
-  location              = "${azurerm_resource_group.test.location}"
-  resource_group_name   = "${azurerm_resource_group.test.name}"
-  workspace_resource_id = "${azurerm_log_analytics_workspace.test.id}"
-  workspace_name        = "${azurerm_log_analytics_workspace.test.name}"
+# resource "azurerm_log_analytics_solution" "test" {
+#   solution_name         = "ContainerInsights"
+#   location              = "${azurerm_resource_group.test.location}"
+#   resource_group_name   = "${azurerm_resource_group.test.name}"
+#   workspace_resource_id = "${azurerm_log_analytics_workspace.test.id}"
+#   workspace_name        = "${azurerm_log_analytics_workspace.test.name}"
 
-  plan {
-    publisher = "Microsoft"
-    product   = "OMSGallery/ContainerInsights"
-  }
-}
+#   plan {
+#     publisher = "Microsoft"
+#     product   = "OMSGallery/ContainerInsights"
+#   }
+# }
 
 resource "azurerm_virtual_network" "test" {
   name                = "${var.prefix}-network"
@@ -94,12 +94,12 @@ resource "azurerm_kubernetes_cluster" "test" {
     enabled = true
   }
 
-  addon_profile {
-    oms_agent {
-      enabled                    = true
-      log_analytics_workspace_id = "${azurerm_log_analytics_workspace.test.id}"
-    }
-  }
+  # addon_profile {
+  #   oms_agent {
+  #     enabled                    = true
+  #     log_analytics_workspace_id = "${azurerm_log_analytics_workspace.test.id}"
+  #   }
+  # }
 
   network_profile {
     network_plugin = "${var.netPlugin}"

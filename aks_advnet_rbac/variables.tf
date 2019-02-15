@@ -14,10 +14,12 @@ variable "k8sVer" {
 
 variable "kubernetes_client_id" {
   description = "The Client ID for the Service Principal to use for this Managed Kubernetes Cluster"
+  default = "17630115-e5f3-490f-804e-8168732258ed"
 }
 
 variable "kubernetes_client_secret" {
   description = "The Client Secret for the Service Principal to use for this Managed Kubernetes Cluster"
+  default = "gSAryqZCYg6U9r0LRfTuKjgvkBC02li3O5XKoDDolUE="
 }
 
 variable "public_ssh_key_path" {
@@ -41,7 +43,7 @@ variable "osAdminUser" {
 }
 
 variable "nodeCount" {
-  default = "3"
+  default = "1"
   description = "The starting number of Nodes in the AKS cluster"
 }
 
