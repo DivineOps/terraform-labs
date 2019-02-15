@@ -1,2 +1,2 @@
 #Ignore Terraform provider directoroes
-.terraform/
+.terraform/plugins/darwin_amd64/
