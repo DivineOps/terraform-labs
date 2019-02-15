@@ -1,0 +1,7 @@
+#Ignore Terraform provider directoroes
+**/.terraform/*
+
+*.tfstate
+*.tfstate.*
+
+*.tfvars
