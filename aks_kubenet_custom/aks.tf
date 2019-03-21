@@ -44,7 +44,7 @@ resource "azurerm_virtual_network" "aks-vnet" {
 }
 
 resource "azurerm_subnet" "aks-subnet" {
-  name                 = "internal"
+  name                 = "aks-subnet"
   resource_group_name  = "${azurerm_resource_group.aks-rg.name}"
   address_prefix       = "${var.subnetIPCIDR}"
   virtual_network_name = "${azurerm_virtual_network.aks-vnet.name}"
