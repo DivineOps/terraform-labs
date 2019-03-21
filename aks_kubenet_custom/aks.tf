@@ -112,8 +112,8 @@ resource "azurerm_kubernetes_cluster" "aks-cluster" {
         command = "./config-network.sh"
 
         environment {
-            AKS_RG = "${var.resource_group_name}"
-            AKS_VNET_RG = "${var.resource_group_name}"
+            AKS_RG = "${azurerm_resource_group.aks-rg.name}"
+            AKS_VNET_RG = "${azurerm_resource_group.aks-rg.name}"
             AKS_VNET_NAME = "${azurerm_virtual_network.aks-vnet.name}"
             AKS_SUBNET_NAME = "${azurerm_subnet.aks-subnet.name}"
         }
@@ -123,8 +123,8 @@ resource "azurerm_kubernetes_cluster" "aks-cluster" {
         command = "./helm-install.sh"
 
         environment {
-            AKS_NAME = "${var.cluster_name}"
-            AKS_RG   = "${var.resource_group_name}"
+            AKS_NAME = "${azurerm_kubernetes_cluster.aks-cluster.name}"
+            AKS_RG   = "${azurerm_resource_group.aks-rg.name}"
         }
     }
 
@@ -133,7 +133,7 @@ resource "azurerm_kubernetes_cluster" "aks-cluster" {
         command = "./clean-network.sh"
         
         environment {
-            AKS_VNET_RG = "${var.resource_group_name}"
+            AKS_VNET_RG = "${azurerm_resource_group.aks-rg.name}"
             AKS_VNET_NAME = "${azurerm_virtual_network.aks-vnet.name}"
             AKS_SUBNET_NAME = "${azurerm_subnet.aks-subnet.name}"
         }
