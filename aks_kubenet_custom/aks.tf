@@ -1,12 +1,12 @@
-resource "azurerm_resource_group" "test" {
+resource "azurerm_resource_group" "aks-rg" {
   name     = "${var.prefix}-aks-rg"
   location = "${var.location}"
 }
 #Uncomment below if you need a Route Table (UDR) to route to an Netwokr Virtual Appliamce (Palo Alto, F5, Barricuda, Cisco ASR, etc) in a peered VNET
-# resource "azurerm_route_table" "test" {
+# resource "azurerm_route_table" "aks-udr" {
 #   name                = "${var.prefix}-routetable"
-#   location            = "${azurerm_resource_group.test.location}"
-#   resource_group_name = "${azurerm_resource_group.test.name}"
+#   location            = "${azurerm_resource_group.aks-rg.location}"
+#   resource_group_name = "${azurerm_resource_group.aks-rg.name}"
 
 #   route {
 #     name                   = "default"
@@ -16,19 +16,19 @@ resource "azurerm_resource_group" "test" {
 #   }
 # }
 
-# resource "azurerm_log_analytics_workspace" "test" {
+# resource "azurerm_log_analytics_workspace" "aks-omsws" {
 #   name                = "${var.prefix}-law"
-#   location            = "${azurerm_resource_group.test.location}"
-#   resource_group_name = "${azurerm_resource_group.test.name}"
+#   location            = "${azurerm_resource_group.aks-rg.location}"
+#   resource_group_name = "${azurerm_resource_group.aks-rg.name}"
 #   sku                 = "Free"
 # }
 
-# resource "azurerm_log_analytics_solution" "test" {
+# resource "azurerm_log_analytics_solution" "aks-omsla" {
 #   solution_name         = "ContainerInsights"
-#   location              = "${azurerm_resource_group.test.location}"
-#   resource_group_name   = "${azurerm_resource_group.test.name}"
-#   workspace_resource_id = "${azurerm_log_analytics_workspace.test.id}"
-#   workspace_name        = "${azurerm_log_analytics_workspace.test.name}"
+#   location              = "${azurerm_resource_group.aks-rg.location}"
+#   resource_group_name   = "${azurerm_resource_group.aks-rg.name}"
+#   workspace_resource_id = "${azurerm_log_analytics_workspace.aks-omsws.id}"
+#   workspace_name        = "${azurerm_log_analytics_workspace.aks-omsws.name}"
 
 #   plan {
 #     publisher = "Microsoft"
@@ -36,34 +36,34 @@ resource "azurerm_resource_group" "test" {
 #   }
 # }
 
-resource "azurerm_virtual_network" "test" {
+resource "azurerm_virtual_network" "aks-vnet" {
   name                = "${var.prefix}-network"
-  location            = "${azurerm_resource_group.test.location}"
-  resource_group_name = "${azurerm_resource_group.test.name}"
+  location            = "${azurerm_resource_group.aks-rg.location}"
+  resource_group_name = "${azurerm_resource_group.aks-rg.name}"
   address_space       = ["${var.vnetIPCIDR}"]
 }
 
-resource "azurerm_subnet" "test" {
+resource "azurerm_subnet" "aks-subnet" {
   name                 = "internal"
-  resource_group_name  = "${azurerm_resource_group.test.name}"
+  resource_group_name  = "${azurerm_resource_group.aks-rg.name}"
   address_prefix       = "${var.subnetIPCIDR}"
-  virtual_network_name = "${azurerm_virtual_network.test.name}"
+  virtual_network_name = "${azurerm_virtual_network.aks-vnet.name}"
   #Uncomment if Route Table was created above. 
   # this field is deprecated and will be removed in 2.0 - but is required until then
-#  route_table_id = "${azurerm_route_table.test.id}"
+#  route_table_id = "${azurerm_route_table.aks-udr.id}"
 }
 
 #Uncomment if Route Table was created above. 
-# resource "azurerm_subnet_route_table_association" "test" {
-#   subnet_id      = "${azurerm_subnet.test.id}"
-#   route_table_id = "${azurerm_route_table.test.id}"
+# resource "azurerm_subnet_route_table_association" "aks-udras" {
+#   subnet_id      = "${azurerm_subnet.aks-subnet.id}"
+#   route_table_id = "${azurerm_route_table.aks-udr.id}"
 # }
 
-resource "azurerm_kubernetes_cluster" "test" {
+resource "azurerm_kubernetes_cluster" "aks-cluster" {
   name                = "${var.prefix}-aks"
-  location            = "${azurerm_resource_group.test.location}"
+  location            = "${azurerm_resource_group.aks-rg.location}"
   dns_prefix          = "${var.prefix}-aks"
-  resource_group_name = "${azurerm_resource_group.test.name}"
+  resource_group_name = "${azurerm_resource_group.aks-rg.name}"
   kubernetes_version = "${var.k8sVer}"
 
   linux_profile {
@@ -82,7 +82,7 @@ resource "azurerm_kubernetes_cluster" "test" {
     os_disk_size_gb = 30
 
     # Required for advanced networking
-    vnet_subnet_id = "${azurerm_subnet.test.id}"
+    vnet_subnet_id = "${azurerm_subnet.aks-subnet.id}"
   }
 
   service_principal {
@@ -97,7 +97,7 @@ resource "azurerm_kubernetes_cluster" "test" {
   # addon_profile {
   #   oms_agent {
   #     enabled                    = true
-  #     log_analytics_workspace_id = "${azurerm_log_analytics_workspace.test.id}"
+  #     log_analytics_workspace_id = "${azurerm_log_analytics_workspace.aks-omsws.id}"
   #   }
   # }
 
@@ -114,8 +114,8 @@ resource "azurerm_kubernetes_cluster" "test" {
         environment {
             AKS_RG = "${var.resource_group_name}"
             AKS_VNET_RG = "${var.resource_group_name}"
-            AKS_VNET_NAME = "${azurerm_virtual_network.vnet.name}"
-            AKS_SUBNET_NAME = "${azurerm_subnet.subnet.name}"
+            AKS_VNET_NAME = "${azurerm_virtual_network.aks-vnet.name}"
+            AKS_SUBNET_NAME = "${azurerm_subnet.aks-subnet.name}"
         }
     }
 
@@ -134,18 +134,18 @@ resource "azurerm_kubernetes_cluster" "test" {
         
         environment {
             AKS_VNET_RG = "${var.resource_group_name}"
-            AKS_VNET_NAME = "${azurerm_virtual_network.vnet.name}"
-            AKS_SUBNET_NAME = "${azurerm_subnet.subnet.name}"
+            AKS_VNET_NAME = "${azurerm_virtual_network.aks-vnet.name}"
+            AKS_SUBNET_NAME = "${azurerm_subnet.aks-subnet.name}"
         }
     }
 }
 
 data "azurerm_azuread_service_principal" "akssp" {
-  application_id = "${var.client_id}"
+  application_id = "${var.kubernetes_client_id}"
 }
 
 resource "azurerm_role_assignment" "netcontribrole" {
-  scope                = "${azurerm_subnet.subnet.id}"
+  scope                = "${azurerm_subnet.aks-subnet.id}"
   role_definition_name = "Network Contributor"
   principal_id         = "${data.azurerm_azuread_service_principal.akssp.object_id}"
 }
