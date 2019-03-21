@@ -109,7 +109,7 @@ resource "azurerm_kubernetes_cluster" "aks-cluster" {
     pod_cidr = "${var.pod-cidr}"
   }
   provisioner "local-exec" {
-        command = "./config-network.sh"
+        command = "./rtnsg-fix.sh"
 
         environment {
             AKS_RG = "${azurerm_resource_group.aks-rg.name}"
@@ -130,7 +130,7 @@ resource "azurerm_kubernetes_cluster" "aks-cluster" {
 
     provisioner "local-exec" {
         when = "destroy"
-        command = "./clean-network.sh"
+        command = "./rtnsg-rm.sh"
         
         environment {
             AKS_VNET_RG = "${azurerm_resource_group.aks-rg.name}"

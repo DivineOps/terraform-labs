@@ -3,12 +3,12 @@ variable "prefix" {
 }
 
 variable "location" {
-  default     = "East US"
+  default     = "Central US"
   description = "The Azure Region in which all resources in this example should be provisioned"
 }
 
 variable "k8sVer" {
-  default     = "1.11.5"
+  default     = "1.12.6"
   description = "The version of Kubernetes you want deployed to your cluster. Please reference the command: az aks get-versions --location eastus -o table"
 }
 
@@ -50,7 +50,7 @@ variable "nodeSize" {
   description = "The Node type and size based on Azure VM SKUs Reference: az vm list-sizes --location eastus -o table"
 }
 variable "netPlugin" {
-  default = "azure"
+  default = "kubenet"
   description = "Can either be azure or kubenet. azure will use Azure subnet IPs for Pod IPs. Kubenet you need to use the pod-cidr variable below"
 }
 
@@ -65,12 +65,12 @@ variable "svc-cidr" {
 }
 
 variable "dns-ip" {
-  default = "172.20.0.10"
+  default = "172.21.0.10"
   description = "The IP address that will be assigned to the CoreDNS or KubeDNS service inside of Kubernetes for Service Discovery. Must start at the .10 or higher of the svc-cidr range"
 }
 
 variable "dockerbridge-cidr" {
-  default = "172.22.0.1/16"
+  default = "172.17.0.1/16"
   description = "The IP address CIDR block to be assigned to the Docker container bridge on each node. If connecting to another peer or to you On-Premises network this CIDR block SHOULD NOT overlap with existing BGP learned routes"
 }
 
