@@ -7,7 +7,7 @@ My sample Terraform template to deploy an AKS cluster. The [aks_advnet_rbac](/ak
 For best results ensure you have the latest Terraform for your workstation or use the [Azure Cloud Shell](https://shell.azure.com/) which has the latest tools installed including Azure CLI, kubectl and terraform.
 
 You will need to get from your Azure CLI a few pieces of info to add to your [variables.tf](/aks_advnet_rbac/variables.tf) file. 
-* Avaibale AKS locations your account has access to:
+* Available AKS locations your account has access to:
 ```
 az account list-locations -o table
 ```
@@ -25,11 +25,11 @@ The result will be used in the variable nodeSize in [variables.tf](/aks_advnet_r
 az aks get-versions --location <region_you_plan_to_use> -o table
 ```
 
-This will list the versions currently supported by AKS including Minor and Patch versions. Use your choise in the variabled named k8sVer in the [variables.tf](/aks_advnet_rbac/variables.tf) file.
+This will list the versions currently supported by AKS including Minor and Patch versions. Use your choice in the variable named k8sVer in the [variables.tf](/aks_advnet_rbac/variables.tf) file.
 
-* Intialize your Terraform to get the latest plugins needed
+* Initialize your Terraform to get the latest plugins needed
 
-CD into the cloned repo and then into the aks_advnet_rbac folder and run your terraform init to ge the latest AzureRM providers
+CD into the cloned repo and then into the aks_advnet_rbac folder and run your terraform init to get the latest AzureRM providers
 ```
 cd aks_advnet_rbac
 terraform init
