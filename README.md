@@ -19,7 +19,7 @@ az vm list-sizes --location <region_you_plan_to_use> -o table
 ```
 The result will be used in the variable nodeSize in [variables.tf](/aks_advnet_rbac/variables.tf)
 
-* Kubenetes Versions available in AKS
+* Kubernetes Versions available in AKS
 
 ```
 az aks get-versions --location <region_you_plan_to_use> -o table
