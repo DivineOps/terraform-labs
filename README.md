@@ -1,6 +1,6 @@
 ## Description:
 
-My sample Terraform template to deploy an AKS cluster with Advanced Networking, Azure Monitoring and Kubernetes RBAC enabled.
+My sample Terraform template to deploy an AKS cluster. The [aks_advnet_rbac](/aks_advnet_rbac/) directory has the terraform code to deploy an AKS cluster with AzureCNI into a custom network and enables Kubernetes RBAC control. The [aks_kubenet_custom](/aks_kubenet_custom/) directory deploys and AKS Cluster with kubenet networking, into a custom subnet, applies the UDR to the correct subnet and installs helm into the cluster with Kubernetes RBAC enabled.
 
 ## Usage
 
