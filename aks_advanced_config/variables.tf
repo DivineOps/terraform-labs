@@ -75,6 +75,19 @@ variable "DOCKER_CIDR" {
   description = "IP address (in CIDR notation) used as the Docker bridge IP address on nodes. Default of 172.17.0.1/16."
 }
 
+variable "AAD_CLIENTAPP_ID" {
+  type = "string"
+}
+
+variable "AAD_SERVERAPP_ID" {
+  type = "string"
+}
+
+variable "AAD_SERVERAPP_SECRET" {
+  type = "string"
+}
+
+
 /*
  * K8S
  */

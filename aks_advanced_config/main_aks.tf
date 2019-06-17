@@ -9,7 +9,8 @@ resource "azurerm_kubernetes_cluster" "main" {
 
   depends_on = [
    "azurerm_role_assignment.aks-network-contributor",
-   "azurerm_subnet.akssubnet"]
+   "azurerm_subnet.akssubnet",
+   "azurerm_firewall.hubazfw"]
 
   linux_profile {
     admin_username = "${var.ADMIN_USER}"
@@ -30,6 +31,7 @@ resource "azurerm_kubernetes_cluster" "main" {
 
   network_profile {
     network_plugin = "azure"
+    network_policy = "calico"
     service_cidr = "${var.SERVICE_CIDR}"
     dns_service_ip = "${var.DNS_IP}"
     docker_bridge_cidr = "${var.DOCKER_CIDR}"
@@ -37,6 +39,14 @@ resource "azurerm_kubernetes_cluster" "main" {
 
   role_based_access_control {
     enabled = true
+    azure_active_directory {
+      # NOTE: in a Production environment these should be different values
+      # but for the purposes of this example, this should be sufficient
+      client_app_id = "${var.AAD_CLIENTAPP_ID}"
+
+      server_app_id     = "${var.AAD_SERVERAPP_ID}"
+      server_app_secret = "${var.AAD_SERVERAPP_SECRET}"
+    }
   }
 
   service_principal {
@@ -49,19 +59,4 @@ resource "azurerm_kubernetes_cluster" "main" {
     "72.183.132.114/32",
     "${azurerm_public_ip.azfwpip.ip_address}/32"
   ]
-}
-# kube config and helm init
-resource "local_file" "kube_config" {
-  # kube config
-  filename = "${var.K8S_KUBE_CONFIG}"
-  content  = "${azurerm_kubernetes_cluster.main.kube_config_raw}"
-
-  # helm init
-  provisioner "local-exec" {
-    command = "helm init --client-only"
-    environment {
-      KUBECONFIG = "${var.K8S_KUBE_CONFIG}"
-      HELM_HOME  = "${var.K8S_HELM_HOME}"
-    }
-  }
 }

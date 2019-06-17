@@ -12,4 +12,5 @@ resource "azurerm_subnet" "akssubnet" {
   resource_group_name       = "${azurerm_resource_group.main.name}"
   address_prefix            = "${var.SUBNET_PREFIXES[count.index]}"
   count                     = "${length(var.SUBNET_NAMES)}"
+  route_table_id            = "${azurerm_route_table.vdmzudr.id}"
 }
