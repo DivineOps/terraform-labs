@@ -87,24 +87,9 @@ variable "AAD_SERVERAPP_SECRET" {
   type = "string"
 }
 
-
 /*
  * K8S
  */
-
-variable "K8S_KUBE_CONFIG" {
-  description = "Path to Kube Config directory"
-}
-
-variable "K8S_HELM_HOME" {
-  description = "Path to Helm Home Directory"
-}
-
-variable "TILLER_VER" {
-  default = "2.14.0"
-  description = "Tiller Version (without prefix v)."
-}
-
 
 variable "VDMZ_VNET_NAME" {
   type = "string"
