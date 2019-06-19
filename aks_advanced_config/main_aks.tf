@@ -54,9 +54,9 @@ resource "azurerm_kubernetes_cluster" "main" {
     client_secret = "${azuread_service_principal_password.akssp.value}"
   }
 
-  api_server_authorized_ip_ranges = [
-    "100.200.0.0/14",
-    "72.183.132.114/32",
-    "${azurerm_public_ip.azfwpip.ip_address}/32"
-  ]
+  # api_server_authorized_ip_ranges = [
+  #   "100.200.0.0/14",
+  #   "72.183.132.114/32",
+  #   "${azurerm_public_ip.azfwpip.ip_address}/32"
+  # ]
 }

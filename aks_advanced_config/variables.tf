@@ -61,12 +61,12 @@ variable "NODE_SIZE" {
   type = "string"
 }
 variable "SERVICE_CIDR" {
-  default = "10.0.0.0/16"
+  default = "172.16.0.0/16"
   description ="Used to assign internal services in the AKS cluster an IP address. This IP address range should be an address space that isn't in use elsewhere in your network environment. This includes any on-premises network ranges if you connect, or plan to connect, your Azure virtual networks using Express Route or a Site-to-Site VPN connections."
   type = "string"
 }
 variable "DNS_IP" {
-  default = "10.0.0.10"
+  default = "172.16.0.10"
   description = "should be the .10 address of your service IP address range"
   type = "string"
 }
@@ -87,6 +87,10 @@ variable "AAD_SERVERAPP_SECRET" {
   type = "string"
 }
 
+variable "AUTH_IP_RANGES" {
+  type="string"
+}
+
 /*
  * K8S
  */
@@ -94,4 +98,8 @@ variable "AAD_SERVERAPP_SECRET" {
 variable "VDMZ_VNET_NAME" {
   type = "string"
   default = "vDMZ-Vnet-hub"
+}
+
+variable "DOCKER_REGISTRY" {
+  type="string"
 }

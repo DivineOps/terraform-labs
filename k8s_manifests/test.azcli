@@ -1,0 +1,3 @@
+kubectl run -i --tty busybox --generator=run-pod/v1 --image=ejvlab.azurecr.io/busybox-curl -- sh
+
+kubectl get events --sort-by=.metadata.creationTimestamp

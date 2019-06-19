@@ -9,7 +9,7 @@ resource "azurerm_route_table" "vdmzudr" {
     name                   = "vDMZ"
     address_prefix         = "0.0.0.0/0"
     next_hop_type          = "VirtualAppliance"
-    next_hop_in_ip_address = "${azurerm_firewall.hubazfw.private_ip_address}"
+    next_hop_in_ip_address = "${azurerm_firewall.hubazfw.ip_configuration.0.private_ip_address}"
   }
 }
 

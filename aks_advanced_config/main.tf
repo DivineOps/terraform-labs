@@ -1,5 +1,7 @@
 # Configure the Microsoft Azure Provider
-provider "azurerm" { }
+provider "azurerm" {
+  version = "~>1.30.1"
+}
 
 # Resource Group
 resource "azurerm_resource_group" "main" {

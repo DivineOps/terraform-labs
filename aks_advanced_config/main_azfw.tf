@@ -61,7 +61,6 @@ resource "azurerm_firewall_application_rule_collection" "appruleazfw" {
       "management.azure.com	",
       "login.microsoftonline.com",
       "api.snapcraft.io",
-      "ntp.ubuntu.com",
       "*.docker.io"
     ]
 
@@ -75,8 +74,91 @@ resource "azurerm_firewall_application_rule_collection" "appruleazfw" {
         type = "Http"
     }
   }
+  rule {
+    name = "dockerReg_rules"
+
+    source_addresses = [
+      "*",
+    ]
+
+    target_fqdns = [
+      "${var.DOCKER_REGISTRY}"
+      "*.docker.io"
+    ]
+
+    protocol {
+        port = "443"
+        type = "Https"
+    }
+
+    protocol {
+        port = "80"
+        type = "Http"
+    }
+  }
+  rule {
+    name = "aks_support_rules"
+
+    source_addresses = [
+      "*",
+    ]
+
+    target_fqdns = [
+      "*.ubuntu.com",
+      "packages.microsoft.com",
+      "dc.services.visualstudio.com",
+      "*.opinsights.azure.com",
+      "*.monitoring.azure.com",
+      "gov-prod-policy-data.trafficmanager.net"
+    ]
+
+    protocol {
+        port = "443"
+        type = "Https"
+    }
+
+    protocol {
+        port = "80"
+        type = "Http"
+    }
+  }
+  
 }
 
+# resource "azurerm_firewall_application_rule_collection" "appruleazfw2" {
+#   name                = "AzureFirewallAppCollection2"
+#   azure_firewall_name = "${azurerm_firewall.hubazfw.name}"
+#   resource_group_name = "${azurerm_resource_group.hubrg.name}"
+#   priority            = 101
+#   action              = "Allow"
+
+#   rule {
+#     name = "aks_support_rules"
+
+#     source_addresses = [
+#       "*",
+#     ]
+
+#     target_fqdns = [
+#       "*.ubuntu.com",
+#       "packages.microsoft.com",
+#       "dc.services.visualstudio.com",
+#       "*.opinsights.azure.com",
+#       "*.monitoring.azure.com",
+#       "gov-prod-policy-data.trafficmanager.net"
+#     ]
+
+#     protocol {
+#         port = "443"
+#         type = "Https"
+#     }
+
+#     protocol {
+#         port = "80"
+#         type = "Http"
+#     }
+#   }
+# }
 # resource "azurerm_firewall_nat_rule_collection" "test" {
 #   name                = "testcollection"
 #   azure_firewall_name = "${azurerm_firewall.test.name}"
@@ -115,13 +197,15 @@ resource "azurerm_firewall_network_rule_collection" "netruleasfw" {
   action              = "Allow"
 
   rule {
-    name = "AllowTCPOutbound"
+    name = "AllowTCP_UDPOutbound"
 
     source_addresses = [
       "*",
     ]
 
     destination_ports = [
+      "53",
+      "123",
       "22",
       "9000"
     ]
