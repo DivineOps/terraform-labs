@@ -6,3 +6,4 @@
 
 *.tfvars
 deployments/
+.DS_Store
