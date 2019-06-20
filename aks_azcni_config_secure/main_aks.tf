@@ -30,12 +30,12 @@ resource "azurerm_kubernetes_cluster" "main" {
   }
 
   network_profile {
-    network_plugin = "kubenet"
-    #network_policy = "calico"
+    network_plugin = "azure"
+    network_policy = "calico"
     service_cidr = "${var.SERVICE_CIDR}"
     dns_service_ip = "${var.DNS_IP}"
     docker_bridge_cidr = "${var.DOCKER_CIDR}"
-    pod_cidr = "${var.POD_CIDR}"
+    #pod_cidr = "${var.POD_CIDR}"
   }
 
   role_based_access_control {
