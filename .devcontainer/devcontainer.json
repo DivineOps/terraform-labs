@@ -1,0 +1,34 @@
+// See https://aka.ms/vscode-remote/devcontainer.json for format details.
+{
+	"name": "Azure Terraform",
+	"dockerFile": "Dockerfile",
+	"runArgs": [
+		// Uncomment the next line if you will use a ptrace-based debugger like C++, Go, and Rust.
+		// "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined",
+		"-v","/var/run/docker.sock:/var/run/docker.sock",
+		"--mount", "type=bind,source=${env:HOME}${env:USERPROFILE}/.kube,target=/root/.kube-localhost",
+		"-e", "SYNC_LOCALHOST_KUBECONFIG=true"
+	],
+
+	// Uncomment the next line if you want to publish any ports.
+	// "appPort": [],
+
+	// Uncomment the next line if you want to add in default container specific settings.json values
+	// "settings":  { "workbench.colorTheme": "Quiet Light" },
+
+	// Uncomment the next line to run commands after the container is created.
+	// "postCreateCommand": "terraform --version",
+
+	"extensions": [
+		"mauve.terraform",
+		"ms-azuretools.vscode-azureterraform",
+		"ms-vscode.azurecli",
+		"peterjausovec.vscode-docker",
+		"ms-kubernetes-tools.vscode-kubernetes-tools"
+	],
+	"settings": {
+		"remote.extensionKind": {
+			"peterjausovec.vscode-docker": "workspace"
+		}	
+	}
+}

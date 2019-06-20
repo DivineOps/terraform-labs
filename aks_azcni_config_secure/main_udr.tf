@@ -14,6 +14,6 @@ resource "azurerm_route_table" "vdmzudr" {
 }
 
 resource "azurerm_subnet_route_table_association" "vdmzudr" {
-  subnet_id      = "${azurerm_subnet.akssubnet.id}"
+  subnet_id      = "${azurerm_subnet.akssubnet[0].id}"
   route_table_id = "${azurerm_route_table.vdmzudr.id}"
 }

@@ -26,7 +26,7 @@ resource "azurerm_kubernetes_cluster" "main" {
     vm_size         = "${var.NODE_SIZE}"
     os_type         = "Linux"
     os_disk_size_gb = 30
-    vnet_subnet_id  = "${azurerm_subnet.akssubnet.id}"
+    vnet_subnet_id  = "${azurerm_subnet.akssubnet[0].id}"
   }
 
   network_profile {
