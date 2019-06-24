@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dummy-svc
+spec:
+  selector:
+    app: dummy-svc
+  ports:
+  - port: 6565
+    targetPort: 6565
+  type: LoadBalancer

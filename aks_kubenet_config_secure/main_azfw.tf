@@ -82,7 +82,7 @@ resource "azurerm_firewall_application_rule_collection" "appruleazfw" {
     ]
 
     target_fqdns = [
-      "${var.DOCKER_REGISTRY}"
+      "${var.DOCKER_REGISTRY}",
       "*.docker.io"
     ]
 
