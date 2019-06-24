@@ -75,6 +75,11 @@ variable "DOCKER_CIDR" {
   description = "IP address (in CIDR notation) used as the Docker bridge IP address on nodes. Default of 172.17.0.1/16."
 }
 
+variable "POD_CIDR" {
+  default="172.18.0.0/16"
+  description="IP address (in CIDR notation) used as the POD IP address on nodes. CIDR must be large enough to be spliot in /24 by each node in cluster. This IP address range should be an address space that isn't in use elsewhere in your network environment. This includes any on-premises network ranges if you connect, or plan to connect, your Azure virtual networks using Express Route or a Site-to-Site VPN connections."
+}
+
 variable "AAD_CLIENTAPP_ID" {
   type = "string"
 }
