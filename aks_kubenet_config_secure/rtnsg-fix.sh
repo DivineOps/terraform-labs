@@ -1,9 +1,4 @@
 #!/bin/bash
-AKS_RG=gbs1dev319-rg
-AKS_VNET_RG=gbs1dev319-rg
-AKS_SUBNET_NAME=aks-subnet
-AKS_VNET_NAME=aks-vnet
-AZFW_INT_IP=10.0.1.4
 
 set -e
 
