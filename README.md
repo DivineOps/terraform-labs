@@ -2,6 +2,8 @@
 
 My sample Terraform template to deploy an AKS cluster. The [aks_advnet_rbac](/aks_advnet_rbac/) directory has the terraform code to deploy an AKS cluster with AzureCNI into a custom network and enables Kubernetes RBAC control. The [aks_kubenet_custom](/aks_kubenet_custom/) directory deploys and AKS Cluster with kubenet networking, into a custom subnet, applies the UDR to the correct subnet and installs helm into the cluster with Kubernetes RBAC enabled.
 
+For secure cluster implementations with Preview Security features please see readme file in [aks_azcni_config_secure](/aks_azcni_config_secure/) for azureCNI and Calico enabled cluster and [aks_kubenet_config_secure](/aks_kubenet_config_secure/) for a kubenet enabled cluster.
+
 ## Usage
 
 For best results ensure you have the latest Terraform for your workstation or use the [Azure Cloud Shell](https://shell.azure.com/) which has the latest tools installed including Azure CLI, kubectl and terraform.
