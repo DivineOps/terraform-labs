@@ -37,7 +37,7 @@ variable "SUBNET_NAMES" {
 }
 variable "SUBNET_PREFIXES" {
   description = "The address prefix to use for the subnet."
-  default     = ["10.10.1.0/21"]
+  default     = ["10.10.0.0/21"]
 }
 
 /*
