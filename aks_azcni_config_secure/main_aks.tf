@@ -22,7 +22,6 @@ resource "azurerm_kubernetes_cluster" "main" {
 
   agent_pool_profile {
     name            = "istiopool"
-    type            = 
     count           = "${var.NODE_COUNT}"
     vm_size         = "${var.NODE_SIZE}"
     os_type         = "Linux"
