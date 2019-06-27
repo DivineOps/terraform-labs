@@ -22,7 +22,18 @@ resource "azurerm_kubernetes_cluster" "main" {
   }
 
   agent_pool_profile {
-    name            = "default"
+    name            = "istiopool"
+    type            = "VirtualMachineScaleSets"
+    count           = "${var.NODE_COUNT}"
+    vm_size         = "${var.NODE_SIZE}"
+    os_type         = "Linux"
+    os_disk_size_gb = 30
+    vnet_subnet_id  = "${azurerm_subnet.akssubnet.id}"
+  }
+
+  agent_pool_profile {
+    name            = "workerpool"
+    type            = "VirtualMachineScaleSets"
     count           = "${var.NODE_COUNT}"
     vm_size         = "${var.NODE_SIZE}"
     os_type         = "Linux"
@@ -32,6 +43,7 @@ resource "azurerm_kubernetes_cluster" "main" {
 
   network_profile {
     network_plugin = "kubenet"
+    network_policy = "calico"
     service_cidr = "${var.SERVICE_CIDR}"
     dns_service_ip = "${var.DNS_IP}"
     docker_bridge_cidr = "${var.DOCKER_CIDR}"
@@ -60,4 +72,44 @@ resource "azurerm_kubernetes_cluster" "main" {
   #   "72.183.132.114/32",
   #   "${azurerm_public_ip.azfwpip.ip_address}/32"
   # ]
+}
+
+data "dns_a_record_set" "apiIP" {
+  host = "${azurerm_kubernetes_cluster.main.fqdn}"
+  depends_on = [
+    "azurerm_kubernetes_cluster.main"
+  ]
+}
+
+resource "azurerm_firewall_network_rule_collection" "netruleapifw" {
+  name                = "AzureFirewallNetCollection-API"
+  azure_firewall_name = "${azurerm_firewall.hubazfw.name}"
+  resource_group_name = "${azurerm_resource_group.hubrg.name}"
+  priority            = 201
+  action              = "Allow"
+
+  depends_on = [
+    "azurerm_kubernetes_cluster.main",
+    "data.dns_a_record_set.apiIP"
+  ]
+
+  rule {
+    name = "AllowAKSAPI_IPOutbound"
+
+    source_addresses = [
+      "*",
+    ]
+
+    destination_ports = [
+      "443"
+    ]
+
+    destination_addresses = [
+      "${join(",",data.dns_a_record_set.apiIP.addrs)}"
+    ]
+
+    protocols = [
+      "TCP"
+    ]
+  }
 }
