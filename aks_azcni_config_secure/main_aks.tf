@@ -23,7 +23,7 @@ resource "azurerm_kubernetes_cluster" "main" {
   }
 
   agent_pool_profile {
-    name            = "istiopool"
+    name            = "agentpool"
     type            = "VirtualMachineScaleSets"
     count           = "${var.NODE_COUNT}"
     vm_size         = "${var.NODE_SIZE}"
@@ -31,7 +31,7 @@ resource "azurerm_kubernetes_cluster" "main" {
     os_disk_size_gb = 30
     vnet_subnet_id  = "${azurerm_subnet.akssubnet.id}"
   }
-  
+
   network_profile {
     network_plugin = "azure"
     network_policy = "calico"
