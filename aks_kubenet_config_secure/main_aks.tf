@@ -10,7 +10,8 @@ resource "azurerm_kubernetes_cluster" "main" {
   depends_on = [
    "azurerm_role_assignment.aks-network-contributor",
    "azurerm_subnet.akssubnet",
-   "azurerm_firewall.hubazfw"]
+   "azurerm_firewall_application_rule_collection.appruleazfw",
+   "azurerm_firewall_network_rule_collection.netruleasfw"]
 
   linux_profile {
     admin_username = "${var.ADMIN_USER}"

@@ -9,3 +9,7 @@ output "AKS_RESOURCE_GROUP" {
 output "AKS_SP_APPID" {
   value = "${azuread_application.akssp.application_id}"
 }
+
+output "AKS_API_SERVER_IP" {
+  value = "${join(",",data.dns_a_record_set.apiIP.addrs)}"
+}
