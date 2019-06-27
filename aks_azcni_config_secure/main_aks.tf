@@ -10,7 +10,9 @@ resource "azurerm_kubernetes_cluster" "main" {
   depends_on = [
    "azurerm_role_assignment.aks-network-contributor",
    "azurerm_subnet.akssubnet",
-   "azurerm_firewall.hubazfw"]
+   "azurerm_firewall_application_rule_collection.appruleazfw",
+   "azurerm_firewall_network_rule_collection.netruleasfw", 
+   "azurerm_subnet_route_table_association.vdmzudr"]
 
   linux_profile {
     admin_username = "${var.ADMIN_USER}"
@@ -22,16 +24,6 @@ resource "azurerm_kubernetes_cluster" "main" {
 
   agent_pool_profile {
     name            = "istiopool"
-    type            = "VirtualMachineScaleSets"
-    count           = "${var.NODE_COUNT}"
-    vm_size         = "${var.NODE_SIZE}"
-    os_type         = "Linux"
-    os_disk_size_gb = 30
-    vnet_subnet_id  = "${azurerm_subnet.akssubnet.id}"
-  }
-  agent_pool_profile {
-    name            = "workerpool"
-    type            = "VirtualMachineScaleSets"
     count           = "${var.NODE_COUNT}"
     vm_size         = "${var.NODE_SIZE}"
     os_type         = "Linux"
@@ -70,4 +62,44 @@ resource "azurerm_kubernetes_cluster" "main" {
   #   "72.183.132.114/32",
   #   "${azurerm_public_ip.azfwpip.ip_address}/32"
   # ]
+}
+
+data "dns_a_record_set" "apiIP" {
+  host = "${azurerm_kubernetes_cluster.main.fqdn}"
+  depends_on = [
+    "azurerm_kubernetes_cluster.main"
+  ]
+}
+
+resource "azurerm_firewall_network_rule_collection" "netruleapifw" {
+  name                = "AzureFirewallNetCollection-API"
+  azure_firewall_name = "${azurerm_firewall.hubazfw.name}"
+  resource_group_name = "${azurerm_resource_group.hubrg.name}"
+  priority            = 201
+  action              = "Allow"
+
+  depends_on = [
+    "azurerm_kubernetes_cluster.main",
+    "data.dns_a_record_set.apiIP"
+  ]
+
+  rule {
+    name = "AllowAKSAPI_IPOutbound"
+
+    source_addresses = [
+      "*",
+    ]
+
+    destination_ports = [
+      "443"
+    ]
+
+    destination_addresses = [
+      "${join(",",data.dns_a_record_set.apiIP.addrs)}"
+    ]
+
+    protocols = [
+      "TCP"
+    ]
+  }
 }
