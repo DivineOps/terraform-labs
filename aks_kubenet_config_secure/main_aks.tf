@@ -31,16 +31,6 @@ resource "azurerm_kubernetes_cluster" "main" {
     vnet_subnet_id  = "${azurerm_subnet.akssubnet.id}"
   }
 
-  agent_pool_profile {
-    name            = "workerpool"
-    type            = "VirtualMachineScaleSets"
-    count           = "${var.NODE_COUNT}"
-    vm_size         = "${var.NODE_SIZE}"
-    os_type         = "Linux"
-    os_disk_size_gb = 30
-    vnet_subnet_id  = "${azurerm_subnet.akssubnet.id}"
-  }
-
   network_profile {
     network_plugin = "kubenet"
     network_policy = "calico"
