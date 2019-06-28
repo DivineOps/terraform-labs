@@ -22,7 +22,7 @@ resource "azurerm_kubernetes_cluster" "main" {
   }
 
   agent_pool_profile {
-    name            = "istiopool"
+    name            = "${var.POOL1_NAME}"
     type            = "VirtualMachineScaleSets"
     count           = "${var.NODE_COUNT}"
     vm_size         = "${var.NODE_SIZE}"
@@ -32,7 +32,7 @@ resource "azurerm_kubernetes_cluster" "main" {
   }
 
   agent_pool_profile {
-    name            = "workerpool"
+    name            = "${var.POOL2_NAME}"
     type            = "VirtualMachineScaleSets"
     count           = "${var.NODE_COUNT}"
     vm_size         = "${var.NODE_SIZE}"

@@ -4,14 +4,14 @@ resource "null_resource" "add_cluster_autoscale_p1" {
   depends_on = ["azurerm_kubernetes_cluster.main"]
 
   provisioner "local-exec" {
-    command = "az aks nodepool update --enable-cluster-autoscaler -n ${var.POOL1_NAME} --min-count ${var.POOL1_MIN} --max-count ${var.POOL1_MAX}5 -g ${azurerm_resource_group.main.name} -n ${azurerm_kubernetes_cluster.main.name}"
+    command = "az aks nodepool update --enable-cluster-autoscaler -n ${var.POOL1_NAME} --min-count ${var.POOL1_MIN} --max-count ${var.POOL1_MAX} -g ${azurerm_resource_group.main.name} --cluster-name ${azurerm_kubernetes_cluster.main.name}"
     
-    environment {
-            AKS_NAME   = "${azurerm_kubernetes_cluster.main.name}"
-            AKS_RG     = "${azurerm_resource_group.main.name}"
   }
-
- }   
+  provisioner "local-exec" {
+    when = "destroy"
+    command = "az aks nodepool update --disable-cluster-autoscaler -n ${var.POOL1_NAME} -g ${azurerm_resource_group.main.name} --cluster-name ${azurerm_kubernetes_cluster.main.name}"
+    
+  }     
 }
 
 resource "null_resource" "add_cluster_autoscale_p2" {
@@ -19,12 +19,13 @@ resource "null_resource" "add_cluster_autoscale_p2" {
   depends_on = ["azurerm_kubernetes_cluster.main"]
 
   provisioner "local-exec" {
-    command = "az aks nodepool update --enable-cluster-autoscaler -n ${var.POOL2_NAME} --min-count ${var.POOL2_MIN} --max-count ${var.POOL2_MAX}5 -g ${azurerm_resource_group.main.name} -n ${azurerm_kubernetes_cluster.main.name}"
-    
-    environment {
-            AKS_NAME   = "${azurerm_kubernetes_cluster.main.name}"
-            AKS_RG     = "${azurerm_resource_group.main.name}"
+    command = "az aks nodepool update --enable-cluster-autoscaler -n ${var.POOL2_NAME} --min-count ${var.POOL2_MIN} --max-count ${var.POOL2_MAX} -g ${azurerm_resource_group.main.name} --cluster-name ${azurerm_kubernetes_cluster.main.name}"
+
   }
 
- }   
+  provisioner "local-exec" {
+    when = "destroy"
+    command = "az aks nodepool update --disable-cluster-autoscaler -n ${var.POOL2_NAME} -g ${azurerm_resource_group.main.name} --cluster-name ${azurerm_kubernetes_cluster.main.name}"
+    
+  }
 }

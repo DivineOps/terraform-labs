@@ -23,6 +23,7 @@ This Terraform module will deploy the following resources:
   * The AKS Created UDR for kubenet is updated with a new route of 0.0.0.0/0 to the internal IP of the AZ Firewall in the peered hub Vnet and assigned to the AKS subnet
   
 The module has a dependency that the deployment machine (the machine running terraform) has the azure CLI 2.0 installed and logged into target Subscription. This is do to preview API features are flagged only through Azure CLI
+![Architecture Overview](./kubenet_secure.png)
 
 The following values can be used for a `terraform.tfvars`
 
