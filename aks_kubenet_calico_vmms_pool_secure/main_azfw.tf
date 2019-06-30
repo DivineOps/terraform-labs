@@ -58,7 +58,7 @@ resource "azurerm_firewall_application_rule_collection" "appruleazfw" {
       "*.blob.core.windows.net",
       "mcr.microsoft.com",
       "*.cdn.mscr.io",
-      "management.azure.com	",
+      "management.azure.com",
       "login.microsoftonline.com",
       "api.snapcraft.io",
       "*.docker.io"
