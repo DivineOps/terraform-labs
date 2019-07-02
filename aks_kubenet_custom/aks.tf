@@ -76,6 +76,7 @@ resource "azurerm_kubernetes_cluster" "aks-cluster" {
 
   agent_pool_profile {
     name            = "agentpool"
+    type            = "VirtualMachineScaleSets"
     count           = "${var.nodeCount}"
     vm_size         = "${var.nodeSize}"
     os_type         = "Linux"
@@ -103,6 +104,7 @@ resource "azurerm_kubernetes_cluster" "aks-cluster" {
 
   network_profile {
     network_plugin = "${var.netPlugin}"
+    network_policy = "calico"
     service_cidr = "${var.svc-cidr}"
     dns_service_ip = "${var.dns-ip}"
     docker_bridge_cidr = "${var.dockerbridge-cidr}"

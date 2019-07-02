@@ -8,7 +8,7 @@ variable "location" {
 }
 
 variable "k8sVer" {
-  default     = "1.12.6"
+  default     = "1.13.5"
   description = "The version of Kubernetes you want deployed to your cluster. Please reference the command: az aks get-versions --location eastus -o table"
 }
 
