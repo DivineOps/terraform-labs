@@ -65,7 +65,7 @@ variable "svc-cidr" {
 }
 
 variable "dns-ip" {
-  default = "172.20.0.10"
+  default = "172.21.0.10"
   description = "The IP address that will be assigned to the CoreDNS or KubeDNS service inside of Kubernetes for Service Discovery. Must start at the .10 or higher of the svc-cidr range"
 }
 
