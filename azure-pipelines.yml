@@ -23,7 +23,12 @@ stages:
       runOnce:
         deploy:
           steps:
-         
+          - task: Bash@3
+            inputs:
+              targetType: 'inline'
+              script: 'pwd
+                ls
+                ls -la'
           - task: AzureCLI@1
             inputs:
               azureSubscription: 'Sasrose Internal Consumption Sub(45f7e5d7-593c-47c4-989c-d4745c4a175c)'
