@@ -24,7 +24,7 @@ stages:
         deploy:
           steps:
           - checkout: self
-          - task: 9240b5c1-a1b2-4799-9325-e071c63236fb
+          - task: ReplaceTokens@3
             inputs:
               rootDirectory: '/aks_advnet_rbac'
               targetFiles: '**/variables.tf'
