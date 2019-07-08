@@ -24,7 +24,7 @@ stages:
         deploy:
           steps:
           - checkout: self
-          - task: qetza.replacetokens.replacetokens-task.replacetokens@3
+          - task: replacetokens@3
             inputs:
               rootDirectory: '/aks_advnet_rbac'
               targetFiles: '**/variables.tf'
