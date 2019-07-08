@@ -23,11 +23,11 @@ stages:
       runOnce:
         deploy:
           steps:
-
+          - checkout: self
           - task: Bash@3
             inputs:
               targetType: 'inline'
-              script: |
+              script: |  
                 cd aks_advnet_rbac
                 terraform init
           - task: AzureCLI@1
