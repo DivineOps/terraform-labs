@@ -9,11 +9,8 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- task: AzureCLI@1
+  inputs:
+    azureSubscription: 'Sasrose Internal Consumption Sub(45f7e5d7-593c-47c4-989c-d4745c4a175c)'
+    scriptLocation: 'inlineScript'
+    inlineScript: 'terraform init'
