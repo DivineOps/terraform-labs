@@ -24,6 +24,16 @@ stages:
         deploy:
           steps:
           - checkout: self
+          - task: replacetokens@3
+            inputs:
+              rootDirectory: '/aks_advnet_rbac'
+              targetFiles: '**/variables.tf'
+              encoding: 'auto'
+              writeBOM: true
+              actionOnMissing: 'warn'
+              keepToken: false
+              tokenPrefix: '#{'
+              tokenSuffix: '}#'
           - task: Bash@3
             inputs:
               targetType: 'inline'
