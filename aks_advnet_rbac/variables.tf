@@ -4,20 +4,22 @@ variable "prefix" {
 }
 
 variable "location" {
-  default     = "East US"
+  default     = "West US"
   description = "The Azure Region in which all resources in this example should be provisioned"
 }
 
 variable "k8sVer" {
-  default     = "1.11.5"
+  default     = "1.12.8"
   description = "The version of Kubernetes you want deployed to your cluster. Please reference the command: az aks get-versions --location eastus -o table"
 }
 
 variable "kubernetes_client_id" {
+  default = #{clientID}#
   description = "The Client ID for the Service Principal to use for this Managed Kubernetes Cluster"
 }
 
 variable "kubernetes_client_secret" {
+  default = #{clientSecret}#
   description = "The Client Secret for the Service Principal to use for this Managed Kubernetes Cluster"
 }
 
