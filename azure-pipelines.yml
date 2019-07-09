@@ -34,6 +34,10 @@ stages:
               keepToken: false
               tokenPrefix: '#{'
               tokenSuffix: '}#'
+          - task: Bash@3
+            inputs:
+              targetType: 'inline'
+              script: 'echo $clientID'
 
           - task: AzureCLI@1
             inputs:
@@ -43,6 +47,6 @@ stages:
                 cd aks_advnet_rbac
                 export ARM_CLIENT_ID=$clientID
                 echo $ARM_CLIENT_ID
-                terraform init
+                
                 
         
