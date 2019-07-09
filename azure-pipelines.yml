@@ -26,7 +26,7 @@ stages:
           - checkout: self
           - task: 'ReplaceTokens@3'
             inputs:
-              rootDirectory: '/aks_advnet_rbac'
+              rootDirectory: ''
               targetFiles: '**/variables.tf'
               encoding: 'auto'
               writeBOM: true
