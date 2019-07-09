@@ -41,6 +41,7 @@ stages:
               scriptLocation: 'inlineScript'
               inlineScript: |
                 cd aks_advnet_rbac
+                cat variables.tf 
                 terraform init
                 terraform plan
         
