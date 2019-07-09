@@ -23,12 +23,12 @@ variable "kubernetes_client_secret" {
   description = "The Client Secret for the Service Principal to use for this Managed Kubernetes Cluster"
 }
 
-variable "kubernetes_client_secret" {
+variable "kubernetes_subscription_id" {
   default = "#{ARM_SUBSCRIPTION_ID}#"
   description = "The Client Secret for the Service Principal to use for this Managed Kubernetes Cluster"
 }
 
-variable "kubernetes_client_secret" {
+variable "kubernetes_tenant_id" {
   default = "#{ARM_TENANT_ID}#"
   description = "The Client Secret for the Service Principal to use for this Managed Kubernetes Cluster"
 }
