@@ -1,3 +1,12 @@
+# Configure the Microsoft Azure Provider
+provider "azurerm" {
+  version = "~>1.30.1"
+  # subscription_id = "${var.kubernetes_subscription_id}"
+  # client_id       = "${var.kubernetes_client_id}"
+  # client_secret   = "${var.kubernetes_client_secret}"
+  # tenant_id       = "${var.kubernetes_tenant_id}"
+}
+
 resource "azurerm_resource_group" "test" {
   name     = "${var.prefix}-aks-rg"
   location = "${var.location}"
@@ -85,10 +94,10 @@ resource "azurerm_kubernetes_cluster" "test" {
     vnet_subnet_id = "${azurerm_subnet.test.id}"
   }
 
-  service_principal {
-    client_id     = "${var.kubernetes_client_id}"
-    client_secret = "${var.kubernetes_client_secret}"
-  }
+ # service_principal {
+ #   client_id     = "${var.kubernetes_client_id}"
+ #   client_secret = "${var.kubernetes_client_secret}"
+ # }
 
   role_based_access_control {
     enabled = true

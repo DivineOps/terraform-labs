@@ -14,12 +14,22 @@ variable "k8sVer" {
 }
 
 variable "kubernetes_client_id" {
-  default = "#{clientID}#"
+  default = "#{ARM_CLIENT_ID}#"
   description = "The Client ID for the Service Principal to use for this Managed Kubernetes Cluster"
 }
 
 variable "kubernetes_client_secret" {
-  default = "#{clientSecret}#"
+  default = "#{ARM_CLIENT_SECRET}#"
+  description = "The Client Secret for the Service Principal to use for this Managed Kubernetes Cluster"
+}
+
+variable "kubernetes_client_secret" {
+  default = "#{ARM_SUBSCRIPTION_ID}#"
+  description = "The Client Secret for the Service Principal to use for this Managed Kubernetes Cluster"
+}
+
+variable "kubernetes_client_secret" {
+  default = "#{ARM_TENANT_ID}#"
   description = "The Client Secret for the Service Principal to use for this Managed Kubernetes Cluster"
 }
 
