@@ -40,6 +40,8 @@ stages:
               script: |
                 echo $(clientID)
                 echo $(clientSecret)
+                export ARM_CLIENT_ID=$clientID
+                echo $ARM_CLIENT_ID
 
           
                 
