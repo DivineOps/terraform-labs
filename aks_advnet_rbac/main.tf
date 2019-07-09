@@ -1,10 +1,10 @@
 # Configure the Microsoft Azure Provider
 provider "azurerm" {
   version = "~>1.30.1"
-  # subscription_id = "${var.kubernetes_subscription_id}"
-  # client_id       = "${var.kubernetes_client_id}"
-  # client_secret   = "${var.kubernetes_client_secret}"
-  # tenant_id       = "${var.kubernetes_tenant_id}"
+   subscription_id = "${var.kubernetes_subscription_id}"
+   client_id       = "${var.kubernetes_client_id}"
+   client_secret   = "${var.kubernetes_client_secret}"
+   tenant_id       = "${var.kubernetes_tenant_id}"
 }
 
 resource "azurerm_resource_group" "test" {
