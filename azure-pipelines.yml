@@ -38,8 +38,8 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
-                echo $clientID
-                echo $clientSecret
+                echo $(clientID)
+                echo $(clientSecret)
 
           
                 
