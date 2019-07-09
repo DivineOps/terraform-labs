@@ -41,9 +41,9 @@ stages:
                 echo client ID $(clientID)
                 
                 cd aks_advnet_rbac
-                cat variables.tf
-                terraform init
                 
+                terraform init
+                terraform plan
 
           
                 
