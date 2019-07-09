@@ -40,8 +40,8 @@ stages:
               script: |
                 echo client ID $(clientID)
                 echo password is $(clientSecret)
-                export ARM_CLIENT_ID=$clientID
-                echo this doesn't seem to work $ARM_CLIENT_ID
+                terraform init
+                terraform plan
 
           
                 
