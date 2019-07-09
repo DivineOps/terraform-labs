@@ -41,6 +41,7 @@ stages:
               scriptLocation: 'inlineScript'
               inlineScript: |
                 cd aks_advnet_rbac
+                az account list -o table
                 terraform init
                 terraform plan
         
