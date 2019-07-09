@@ -41,7 +41,7 @@ stages:
               scriptLocation: 'inlineScript'
               inlineScript: |
                 cd aks_advnet_rbac
-                export ARM_CLIENT_ID = $env:clientID
+                export ARM_CLIENT_ID=$env:clientID
                 echo $ARM_CLIENT_ID
                 terraform init
                 
