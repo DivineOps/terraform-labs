@@ -39,10 +39,11 @@ stages:
               targetType: 'inline'
               script: |
                 echo client ID $(clientID)
-                echo password is $(clientSecret)
+                
                 cd aks_advnet_rbac
+                cat variables.tf
                 terraform init
-                terraform plan
+                
 
           
                 
