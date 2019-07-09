@@ -41,7 +41,8 @@ stages:
               scriptLocation: 'inlineScript'
               inlineScript: |
                 cd aks_advnet_rbac
-                az account list -o table
+                export ARM_CLIENT_ID = $env:clientID
+                echo $ARM_CLIENT_ID
                 terraform init
-                terraform plan
+                
         
