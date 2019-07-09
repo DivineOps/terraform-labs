@@ -14,12 +14,12 @@ variable "k8sVer" {
 }
 
 variable "kubernetes_client_id" {
-  default = #{clientID}#
+  default = "#{clientID}#"
   description = "The Client ID for the Service Principal to use for this Managed Kubernetes Cluster"
 }
 
 variable "kubernetes_client_secret" {
-  default = #{clientSecret}#
+  default = "#{clientSecret}#"
   description = "The Client Secret for the Service Principal to use for this Managed Kubernetes Cluster"
 }
 
