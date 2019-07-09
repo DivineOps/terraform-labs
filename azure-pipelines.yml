@@ -38,10 +38,10 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
-                echo $(clientID)
-                echo $(clientSecret)
+                echo client ID $(clientID)
+                echo password is $(clientSecret)
                 export ARM_CLIENT_ID=$clientID
-                echo $ARM_CLIENT_ID
+                echo this doesn't seem to work $ARM_CLIENT_ID
 
           
                 
