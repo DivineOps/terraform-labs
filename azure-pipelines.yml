@@ -27,7 +27,7 @@ stages:
           - task: 'ReplaceTokens@3'
             inputs:
               rootDirectory: ''
-              targetFiles: '**/variables.tf'
+              targetFiles: '**/*.tf'
               encoding: 'auto'
               writeBOM: true
               actionOnMissing: 'warn'
