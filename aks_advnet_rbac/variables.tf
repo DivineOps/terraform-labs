@@ -1,5 +1,5 @@
 variable "prefix" {
-  default = "airlift"
+  default = "airlift1"
   description = "A prefix used for all resources in this example"
 }
 
