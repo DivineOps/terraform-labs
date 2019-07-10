@@ -38,12 +38,12 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
-                echo client ID $(clientID)
                 
                 cd aks_advnet_rbac
                 
                 terraform init
                 terraform plan
+                terraform apply -auto-approve
 
           
                 
