@@ -3,11 +3,11 @@
 terraform {
 
   backend "azurerm" {
-    storage_account_name = "${var.storage_account_name}"
+    storage_account_name = "#{STORAGE_ACCOUNT_NAME}#"
     container_name       = "tfstate"
     key                  = "prod.terraform.tfstate"
 
-    access_key = "${var.storage_account_key}"
+    access_key = "#{STORAGE_ACCOUNT_KEY}#"
   }
 }
 
