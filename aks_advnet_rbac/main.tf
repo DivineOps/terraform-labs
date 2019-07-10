@@ -1,4 +1,13 @@
 # Configure the Microsoft Azure Provider
+
+backend "azurerm" {
+  storage_account_name = "${var.storage_account_name}"
+  container_name       = "tfstate"
+  key                  = "prod.terraform.tfstate"
+
+  access_key = "${var.storage_account_key}"
+}
+
 provider "azurerm" {
   version = "~>1.30.1"
    subscription_id = "${var.kubernetes_subscription_id}"
