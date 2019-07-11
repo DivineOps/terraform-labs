@@ -12,7 +12,7 @@ variables:
 
   # Container registry service connection established during pipeline creation
   connectionType: 'Azure Resource Manager'
-  azureSubscriptionEndpoint: 'Sasrose Internal Consumption Sub'
+  azureSubscriptionEndpoint: 'ServiceConnectionName'
   azureResourceGroup: 'airlift-aks-rg'
   kubernetesCluster: 'airlift-aks'
   dockerRegistryServiceConnection: 'eaa59aca-42ba-4064-8d77-e7668962622c'
