@@ -23,6 +23,23 @@ resource "azurerm_resource_group" "test" {
   name     = "${var.prefix}-aks-rg"
   location = "${var.location}"
 }
+
+resource "azurerm_policy_assignment" "test" {
+  name                 = "location-policy-assignment"
+  scope                = "${azurerm_resource_group.test.id}"
+  policy_definition_id = "${azurerm_policy_definition.test.id}"
+  description          = "Policy Assignment created via an Acceptance Test"
+  display_name         = "Location Policy Assignment"
+
+  parameters = <<PARAMETERS
+{
+  "allowedLocations": {
+    "value": [ ${var.location} ]
+  }
+}
+PARAMETERS
+}
+
 #Uncomment below if you need a Route Table (UDR) to route to an Netwokr Virtual Appliamce (Palo Alto, F5, Barricuda, Cisco ASR, etc) in a peered VNET
 # resource "azurerm_route_table" "test" {
 #   name                = "${var.prefix}-routetable"
