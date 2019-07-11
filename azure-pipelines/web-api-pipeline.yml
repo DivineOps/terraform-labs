@@ -20,6 +20,7 @@ variables:
   containerRegistry: 'airliftaksacr.azurecr.io'
   dockerfilePath: './golang/mywebapi/Dockerfile'
   chartPath: './golang/mywebapi/charts/mywebapi'
+  buildContext: './golang/mywebapi'
   tag: '$(Build.BuildId)'
   imagePullSecret: 'airliftaksacrf709-auth'
   namespace: 'golang-app'
@@ -39,18 +40,27 @@ stages:
     pool:
       vmImage: $(vmImageName)
     steps:
-    - task: Docker@2
-      displayName: Build and push an image to container registry
+
+    - task: Docker@1
+      displayName: 'Build an image'
       inputs:
-        command: buildAndPush
-        repository: $(imageRepository)
-        dockerfile: $(dockerfilePath)
-        containerRegistry: $(dockerRegistryServiceConnection)
-        tags: |
-          $(tag)
-          
-    - upload: manifests
-      artifact: manifests
+        azureSubscriptionEndpoint: '$(azureSubscriptionEndpoint)'
+        azureContainerRegistry: '$(containerRegistry)'
+        dockerFile: '$(dockerfilePath)'
+        imageName: '$(containerRegistry)/$(hostname):$(Build.BuildId)'
+        includeLatestTag: true
+        useDefaultContext: false
+        buildContext: '$(buildContext)'
+
+    - task: Docker@1
+      displayName: 'Push an image'
+      inputs:
+        azureSubscriptionEndpoint: '$(azureSubscriptionEndpoint)'
+        azureContainerRegistry: '$(containerRegistry)'
+        command: 'Push an image'
+        imageName: '$(containerRegistry)/$(hostname):$(Build.BuildId)'
+
+
 
 - stage: Deploy
   displayName: Deploy stage
