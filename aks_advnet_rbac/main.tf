@@ -34,7 +34,7 @@ resource "azurerm_policy_assignment" "test" {
   parameters = <<PARAMETERS
 {
   "allowedLocations": {
-    "value": [ ${var.location} ]
+    "value": [ "${var.location}" ]
   }
 }
 PARAMETERS
