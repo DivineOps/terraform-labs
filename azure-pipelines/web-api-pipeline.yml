@@ -94,17 +94,37 @@ stages:
                 name: $(namespace)
               spec: {}
               status: {}
-              
-              ---
-              
+              '
+          - task: Kubernetes@1
+            displayName: 'kubectl setup tiller environment'
+            inputs:
+              connectionType: '$(connectionType)'
+              azureSubscriptionEndpoint: '$(azureSubscriptionEndpoint)'
+              azureResourceGroup: '$(azureResourceGroup)'
+              kubernetesCluster: '$(kubernetesCluster)'
+              namespace: '$(namespace)'
+              command: apply
+              useConfigurationFile: true
+              configurationType: inline
+              inline: '
               kind: ServiceAccount
               apiVersion: v1
               metadata:
                 name: tiller
                 namespace: $(namespace)
-              
-              ---
-              
+              '
+          - task: Kubernetes@1
+            displayName: 'kubectl setup tiller environment'
+            inputs:
+              connectionType: '$(connectionType)'
+              azureSubscriptionEndpoint: '$(azureSubscriptionEndpoint)'
+              azureResourceGroup: '$(azureResourceGroup)'
+              kubernetesCluster: '$(kubernetesCluster)'
+              namespace: '$(namespace)'
+              command: apply
+              useConfigurationFile: true
+              configurationType: inline
+              inline: '    
               kind: Role
               apiVersion: rbac.authorization.k8s.io/v1beta1
               metadata:
@@ -114,9 +134,19 @@ stages:
               - apiGroups: ["", "batch", "extensions", "apps"]
                 resources: ["*"]
                 verbs: ["*"]
-              
-              ---
-              
+              '
+          - task: Kubernetes@1
+            displayName: 'kubectl setup tiller environment'
+            inputs:
+              connectionType: '$(connectionType)'
+              azureSubscriptionEndpoint: '$(azureSubscriptionEndpoint)'
+              azureResourceGroup: '$(azureResourceGroup)'
+              kubernetesCluster: '$(kubernetesCluster)'
+              namespace: '$(namespace)'
+              command: apply
+              useConfigurationFile: true
+              configurationType: inline
+              inline: '
               kind: RoleBinding
               apiVersion: rbac.authorization.k8s.io/v1beta1
               metadata:
@@ -132,7 +162,6 @@ stages:
                 apiGroup: rbac.authorization.k8s.io
               versionSpec: 1.13.5
               '
-
           - task: HelmInstaller@0
             displayName: 'Install Helm 2.11.0'
             inputs:
