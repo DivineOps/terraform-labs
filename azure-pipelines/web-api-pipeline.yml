@@ -34,6 +34,7 @@ variables:
 stages:
 - stage: Build
   displayName: Build stage
+  condition: false 
 
   jobs:  
   - job: Build
@@ -66,7 +67,7 @@ stages:
 
 - stage: Deploy
   displayName: Deploy stage
-  dependsOn: Build
+  # dependsOn: Build
   jobs:
   - deployment: Deploy
     displayName: Deploy
@@ -77,6 +78,8 @@ stages:
       runOnce:
         deploy:
           steps:
+
+          - checkout: self
 
           - task: Kubernetes@1
             displayName: 'kubectl setup tiller environment'
