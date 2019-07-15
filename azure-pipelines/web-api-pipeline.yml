@@ -34,7 +34,6 @@ variables:
 stages:
 - stage: Build
   displayName: Build stage
-  enabled: false
 
   jobs:  
   - job: Build
@@ -46,6 +45,7 @@ stages:
 
     - task: Docker@1
       displayName: 'Build an image'
+      enabled: false
       inputs:
         azureSubscriptionEndpoint: '$(azureSubscriptionEndpoint)'
         azureContainerRegistry: '$(containerRegistry)'
@@ -57,6 +57,7 @@ stages:
 
     - task: Docker@1
       displayName: 'Push an image'
+      enabled: false
       inputs:
         azureSubscriptionEndpoint: '$(azureSubscriptionEndpoint)'
         azureContainerRegistry: '$(containerRegistry)'
