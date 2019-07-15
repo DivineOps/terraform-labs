@@ -87,14 +87,14 @@ stages:
               command: apply
               useConfigurationFile: true
               configurationType: inline
-              inline: '
-              kind: Namespace
-              apiVersion: v1
-              metadata:
-                name: $(namespace)
-              spec: {}
-              status: {}
-              '
+              inline: |
+                kind: Namespace
+                apiVersion: v1
+                metadata:
+                  name: $(namespace)
+                spec: {}
+                status: {}
+              
           - task: Kubernetes@1
             displayName: 'kubectl setup tiller environment'
             inputs:
