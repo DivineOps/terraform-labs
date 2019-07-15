@@ -34,11 +34,14 @@ variables:
 stages:
 - stage: Build
   displayName: Build stage
+  enabled: false
+
   jobs:  
   - job: Build
     displayName: Build
     pool:
       vmImage: $(vmImageName)
+      
     steps:
 
     - task: Docker@1
