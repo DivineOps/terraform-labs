@@ -166,6 +166,21 @@ stages:
                   name: tiller-manager
                   apiGroup: rbac.authorization.k8s.io
               
+          - task: Kubernetes@1
+            displayName: 'kubectl set imagePullSecrets'
+            inputs:
+              connectionType: '$(connectionType)'
+              azureSubscriptionEndpoint: '$(azureSubscriptionEndpoint)'
+              azureResourceGroup: '$(azureResourceGroup)'
+              kubernetesCluster: '$(kubernetesCluster)'
+              namespace: '$(namespace)'
+              command: get
+              arguments: service
+              azureSubscriptionEndpointForSecrets: '$(azureSubscriptionEndpoint)'
+              azureContainerRegistry: '$(containerRegistry)'
+              secretName: '$(dockerAuthSecretName)'
+              versionSpec: 1.13.5
+
           - task: HelmInstaller@0
             displayName: 'Install Helm 2.11.0'
             inputs:
