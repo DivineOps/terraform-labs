@@ -34,11 +34,11 @@ variables:
 stages:
 - stage: Build
   displayName: Build stage
-  condition: false 
 
   jobs:  
   - job: Build
     displayName: Build
+    condition: false 
     pool:
       vmImage: $(vmImageName)
       
