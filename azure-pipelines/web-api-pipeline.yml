@@ -182,9 +182,9 @@ stages:
               versionSpec: 1.13.5
 
           - task: HelmInstaller@0
-            displayName: 'Install Helm 2.11.0'
+            displayName: 'Install Helm 2.14.2'
             inputs:
-              helmVersion: 2.11.0
+              helmVersion: 2.14.2
               kubectlVersion: 1.10.3
               checkLatestKubectl: false
 
