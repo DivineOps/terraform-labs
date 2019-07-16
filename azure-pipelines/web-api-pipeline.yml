@@ -38,7 +38,7 @@ stages:
   jobs:  
   - job: Build
     displayName: Build
-    condition: false 
+    condition: true 
     pool:
       vmImage: $(vmImageName)
       
@@ -62,8 +62,6 @@ stages:
         azureContainerRegistry: '$(containerRegistry)'
         command: 'Push an image'
         imageName: '$(containerRegistry)/$(hostname):$(Build.BuildId)'
-
-
 
 - stage: Deploy
   displayName: Deploy stage
