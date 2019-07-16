@@ -196,6 +196,9 @@ stages:
               azureResourceGroup: '$(azureResourceGroup)'
               kubernetesCluster: '$(kubernetesCluster)'
               command: init
+              upgradeTiller: false
+              arguments: '--service-account tiller'
+              tillerNamespace: '$(namespace)'
 
           - task: HelmDeploy@0
             displayName: 'helm upgrade'
