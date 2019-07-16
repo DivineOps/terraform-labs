@@ -26,7 +26,7 @@ variables:
   namespace: 'golang-app'
   hostname: 'mywebapi'
   dockerAuthSecretName: 'aks1aksdockerauth'
-  releaseName: 'mywebapi'
+  serviceName: 'mywebapi'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
@@ -78,21 +78,6 @@ stages:
           steps:
 
           - checkout: self
-              
-          - task: Kubernetes@1
-            displayName: 'kubectl set imagePullSecrets'
-            inputs:
-              connectionType: '$(connectionType)'
-              azureSubscriptionEndpoint: '$(azureSubscriptionEndpoint)'
-              azureResourceGroup: '$(azureResourceGroup)'
-              kubernetesCluster: '$(kubernetesCluster)'
-              namespace: '$(namespace)'
-              command: get
-              arguments: service
-              azureSubscriptionEndpointForSecrets: '$(azureSubscriptionEndpoint)'
-              azureContainerRegistry: '$(containerRegistry)'
-              secretName: '$(dockerAuthSecretName)'
-              versionSpec: 1.13.5
 
           - task: HelmInstaller@0
             displayName: 'Install Helm 2.14.2'
@@ -124,7 +109,9 @@ stages:
               command: upgrade
               chartType: FilePath
               chartPath: '$(chartPath)'
-              releaseName: '$(releaseName)'
+              releaseName: '$(serviceName)'
               waitForExecution: false
-              arguments: '--set fullnameOverride=mywebapi --set image.repository=$(containerRegistry)/$(mywebapi) --set image.tag=$(Build.BuildId) --set service.port=80 --set ingress.enabled=true --set ingress.hostname=$(hostname).0ee3958d842446808949.southcentralus.aksapp.io --set imagePullSecrets={$(dockerAuthSecretName)} --timeout 900'
+              force: true
+              tillerNamespace: '$(namespace)'
+              arguments: '--set fullnameOverride=$(serviceName) --set image.repository=$(containerRegistry)/$(serviceName) --set image.tag=$(Build.BuildId) --set service.port=80 --set ingress.enabled=true --set ingress.hostname=$(serviceName).0ee3958d842446808949.southcentralus.aksapp.io --set imagePullSecrets={$(dockerAuthSecretName)} --timeout 900'
   
