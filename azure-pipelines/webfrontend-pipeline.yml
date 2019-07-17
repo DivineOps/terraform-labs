@@ -1,0 +1,174 @@
+# Deploy to Azure Kubernetes Service
+# Build and push image to Azure Container Registry; Deploy to Azure Kubernetes Service
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- master
+
+resources:
+- repo: self
+
+variables:
+
+  # Container registry service connection established during pipeline creation
+  connectionType: 'Azure Resource Manager'
+  azureSubscriptionEndpoint: 'ServiceConnectionName'
+  azureResourceGroup: '$(PREFIX)-aks-rg'
+  kubernetesCluster: '$(PREFIX)-aks'
+  dockerRegistryServiceConnection: 'eaa59aca-42ba-4064-8d77-e7668962622c'
+  imageRepository: 'divineopsterraformlabs'
+  containerRegistry: '$(PREFIX)aksacr.azurecr.io'
+  dockerfilePath: './golang/webfrontend/Dockerfile'
+  chartPath: './golang/webfrontend/charts/webfrontend'
+  buildContext: './golang/webfrontend'
+  tag: '$(Build.BuildId)'
+  imagePullSecret: '$(PREFIX)aksacrf709-auth'
+  namespace: 'golang-app'
+  hostname: 'webfrontend'
+  dockerAuthSecretName: 'aks1aksdockerauth'
+  serviceName: 'webfrontend'
+
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+
+stages:
+- stage: Build
+  displayName: Build stage
+
+  jobs:  
+  - job: Build
+    displayName: Build
+    condition: true 
+    pool:
+      vmImage: $(vmImageName)
+      
+    steps:
+
+    - task: Docker@1
+      displayName: 'Build an image'
+      inputs:
+        azureSubscriptionEndpoint: '$(azureSubscriptionEndpoint)'
+        azureContainerRegistry: '$(containerRegistry)'
+        dockerFile: '$(dockerfilePath)'
+        imageName: '$(containerRegistry)/$(hostname):$(Build.BuildId)'
+        includeLatestTag: true
+        useDefaultContext: false
+        buildContext: '$(buildContext)'
+
+    - task: Docker@1
+      displayName: 'Push an image'
+      inputs:
+        azureSubscriptionEndpoint: '$(azureSubscriptionEndpoint)'
+        azureContainerRegistry: '$(containerRegistry)'
+        command: 'Push an image'
+        imageName: '$(containerRegistry)/$(hostname):$(Build.BuildId)'
+
+- stage: Deploy
+  displayName: Deploy stage
+  # dependsOn: Build
+  jobs:
+  - deployment: Deploy
+    displayName: Deploy
+    pool:
+      vmImage: $(vmImageName)
+    environment: '$(namespace)'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+
+          - checkout: self
+
+          - task: Kubernetes@1
+            displayName: 'kubectl setup tiller environment'
+            inputs:
+              connectionType: '$(connectionType)'
+              azureSubscriptionEndpoint: '$(azureSubscriptionEndpoint)'
+              azureResourceGroup: '$(azureResourceGroup)'
+              kubernetesCluster: '$(kubernetesCluster)'
+              namespace: '$(namespace)'
+              command: apply
+              useConfigurationFile: true
+              configurationType: inline
+              inline: |
+                kind: Namespace
+                apiVersion: v1
+                metadata:
+                  name: $(namespace)
+                spec: {}
+                status: {}
+                
+                ---
+                
+                kind: ServiceAccount
+                apiVersion: v1
+                metadata:
+                  name: tiller
+                  namespace: $(namespace)
+                
+                ---
+                
+                kind: Role
+                apiVersion: rbac.authorization.k8s.io/v1beta1
+                metadata:
+                  name: tiller-manager
+                  namespace: $(namespace)
+                rules:
+                - apiGroups: ["", "batch", "extensions", "apps"]
+                  resources: ["*"]
+                  verbs: ["*"]
+                
+                ---
+                
+                kind: RoleBinding
+                apiVersion: rbac.authorization.k8s.io/v1beta1
+                metadata:
+                  name: tiller-binding
+                  namespace: $(namespace)
+                subjects:
+                - kind: ServiceAccount
+                  name: tiller
+                  namespace: $(namespace)
+                roleRef:
+                  kind: Role
+                  name: tiller-manager
+                  apiGroup: rbac.authorization.k8s.io
+                  
+              versionSpec: 1.12.8
+
+          - task: HelmInstaller@0
+            displayName: 'Install Helm 2.14.2'
+            inputs:
+              helmVersion: 2.14.2
+              kubectlVersion: 1.10.3
+              checkLatestKubectl: false
+
+          - task: HelmDeploy@0
+            displayName: 'helm init'
+            inputs:
+              connectionType: '$(connectionType)'
+              azureSubscription: '$(azureSubscriptionEndpoint)'
+              azureResourceGroup: '$(azureResourceGroup)'
+              kubernetesCluster: '$(kubernetesCluster)'
+              command: init
+              upgradeTiller: false
+              arguments: '--service-account tiller'
+              tillerNamespace: '$(namespace)'
+
+          - task: HelmDeploy@0
+            displayName: 'helm upgrade'
+            inputs:
+              connectionType: '$(connectionType)'
+              azureSubscription: '$(azureSubscriptionEndpoint)'
+              azureResourceGroup: '$(azureResourceGroup)'
+              kubernetesCluster: '$(kubernetesCluster)'
+              namespace: '$(namespace)'
+              command: upgrade
+              chartType: FilePath
+              chartPath: '$(chartPath)'
+              releaseName: '$(serviceName)'
+              waitForExecution: false
+              force: true
+              tillerNamespace: '$(namespace)'
+              arguments: '--set fullnameOverride=$(serviceName) --set image.repository=$(containerRegistry)/$(serviceName) --set image.tag=$(Build.BuildId) --set service.port=80 --set imagePullSecrets={$(dockerAuthSecretName)} --timeout 900'
+  
