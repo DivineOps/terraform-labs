@@ -3,7 +3,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
 trigger:
-- none
+- master
 
 resources:
 - repo: self
@@ -133,6 +133,8 @@ stages:
                   kind: Role
                   name: tiller-manager
                   apiGroup: rbac.authorization.k8s.io
+                  
+              versionSpec: 1.12.8
 
           - task: HelmInstaller@0
             displayName: 'Install Helm 2.14.2'
