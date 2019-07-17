@@ -170,5 +170,5 @@ stages:
               waitForExecution: false
               force: true
               tillerNamespace: '$(namespace)'
-              arguments: '--set fullnameOverride=$(serviceName) --set image.repository=$(containerRegistry)/$(serviceName) --set image.tag=$(Build.BuildId) --set service.port=80 --set ingress.enabled=true --set imagePullSecrets={$(dockerAuthSecretName)} --timeout 900'
+              arguments: '--set fullnameOverride=$(serviceName) --set image.repository=$(containerRegistry)/$(serviceName) --set image.tag=$(Build.BuildId) --set service.port=80 --set imagePullSecrets={$(dockerAuthSecretName)} --timeout 900'
   
