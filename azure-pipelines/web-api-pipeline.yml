@@ -38,7 +38,7 @@ stages:
   jobs:  
   - job: Build
     displayName: Build
-    condition: false 
+    condition: true 
     pool:
       vmImage: $(vmImageName)
       
