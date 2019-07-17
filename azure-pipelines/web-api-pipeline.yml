@@ -71,7 +71,7 @@ stages:
     displayName: Deploy
     pool:
       vmImage: $(vmImageName)
-    environment: 'DivineOpsterraformlabs-1598.default'
+    environment: '$(namespace)'
     strategy:
       runOnce:
         deploy:
