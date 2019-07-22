@@ -30,7 +30,7 @@ resource "azurerm_policy_assignment" "test" {
   policy_definition_id = "${azurerm_policy_definition.test.id}"
   description          = "Policy Assignment created via an Acceptance Test"
   display_name         = "Location Policy Assignment"
-  dependson            = "azurerm_resource_group.test"
+  # depends_on           = [azurerm_resource_group.test]
 
   parameters = <<PARAMETERS
   {
