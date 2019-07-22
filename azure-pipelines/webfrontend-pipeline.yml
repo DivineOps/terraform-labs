@@ -38,7 +38,8 @@ stages:
   jobs:  
   - job: Build
     displayName: Build
-    condition: true 
+     # set condition to false if you need to save time by skipping Image building
+    condition: false 
     pool:
       vmImage: $(vmImageName)
       
