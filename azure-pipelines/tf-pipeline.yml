@@ -39,6 +39,8 @@ stages:
               targetType: 'inline'
               script: |
                 
+                echo "My environment variable for access key is $(ARM_ACCESS_KEY)"
+
                 cd aks_advnet_rbac
                 
                 terraform init
