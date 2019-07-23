@@ -7,7 +7,8 @@ terraform {
     container_name       = "tfstate"
     key                  = "prod.terraform.tfstate"
 
-    access_key = "#{STORAGE_ACCOUNT_KEY}#"
+    # remove the access key in TF to see if it will work with env variable
+    # access_key = "#{STORAGE_ACCOUNT_KEY}#"
   }
 }
 
