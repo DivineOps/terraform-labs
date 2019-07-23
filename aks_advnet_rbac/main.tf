@@ -3,12 +3,11 @@
 terraform {
 
   backend "azurerm" {
-    storage_account_name = "breakstoragename"
+    storage_account_name = "tfstateazdo"
     container_name       = "tfstate"
     key                  = "prod.terraform.tfstate"
 
-    # remove the access key in TF to see if it will work with env variable
-    # access_key = "#{STORAGE_ACCOUNT_KEY}#"
+    # access_key = Do not put the secret in the repo! Use the ARM_ACCESS_KEY environment variable instead!
   }
 }
 
