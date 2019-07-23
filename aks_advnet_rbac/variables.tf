@@ -1,5 +1,5 @@
 variable "prefix" {
-  default = "#{PREFIX}#"
+  default = "$(PREFIX)"
   description = "A prefix used for all resources in this example"
 }
 
