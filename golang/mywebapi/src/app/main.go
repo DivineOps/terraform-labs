@@ -18,17 +18,17 @@ func healthzHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Ping")
 }
 
-func insecureConnect()  {
-  user := "root"
-  myPassword := "supersecret"
-  url := "login=" + user + "&passwd=" + myPassword
+// func insecureConnect()  {
+//   user := "root"
+//   myPassword := "supersecret"
+//   url := "login=" + user + "&passwd=" + myPassword
 
-  var (
-    ip   = "127.0.0.1"
-    port = 3333
-  )
-  SocketClient(ip, port)
-}
+//   var (
+//     ip   = "127.0.0.1"
+//     port = 3333
+//   )
+//   SocketClient(ip, port)
+// }
 
 func main() {
 	http.HandleFunc("/", sayHelloHandler)

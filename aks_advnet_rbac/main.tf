@@ -14,6 +14,7 @@ terraform {
 }
 
 provider "azurerm" {
+
   version = "~>1.30.1"
   # Use environment variables for secrets and GUIDs
 
@@ -125,6 +126,9 @@ resource "azurerm_kubernetes_cluster" "test" {
   }
 
   service_principal {
+    # The Service Principal is used by terraform to authenticate the script commands (terraforn init, plan, apply etc.)
+    # Unforunately the reserved names ARM_CLIENT_ID and ARM_CLIENT_SECRET are not allowed here
+    # Instead we are using TF_VAR_ARM_CLIENT_ID
     client_id     = "${var.ARM_CLIENT_ID}"
     client_secret = "${var.ARM_CLIENT_SECRET}"
   }
