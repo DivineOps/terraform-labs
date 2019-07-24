@@ -19,16 +19,6 @@ variable "ARM_CLIENT_SECRET" {
   description = "The Client Secret for the Service Principal to use for this Managed Kubernetes Cluster"
 }
 
-# variable "kubernetes_subscription_id" {
-#   default = "#{ARM_SUBSCRIPTION_ID}#"
-#   description = "The Client Secret for the Service Principal to use for this Managed Kubernetes Cluster"
-# }
-
-# variable "kubernetes_tenant_id" {
-#   default = "#{ARM_TENANT_ID}#"
-#   description = "The Client Secret for the Service Principal to use for this Managed Kubernetes Cluster"
-# }
-
 variable "ADMIN_SSH" {
   description = "The Path at which your Public SSH Key is located. Defaults to ~/.ssh/id_rsa.pub"
 }
