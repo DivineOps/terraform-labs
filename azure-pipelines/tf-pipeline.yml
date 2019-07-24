@@ -24,16 +24,7 @@ stages:
         deploy:
           steps:
           - checkout: self
-          - task: 'ReplaceTokens@3'
-            inputs:
-              rootDirectory: ''
-              targetFiles: '**/*.tf'
-              encoding: 'auto'
-              writeBOM: true
-              actionOnMissing: 'warn'
-              keepToken: false
-              tokenPrefix: '#{'
-              tokenSuffix: '}#'
+          
           - task: Bash@3
             inputs:
               targetType: 'inline'
