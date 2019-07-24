@@ -122,10 +122,10 @@ resource "azurerm_kubernetes_cluster" "test" {
     vnet_subnet_id = "${azurerm_subnet.test.id}"
   }
 
-  service_principal {
-    client_id     = "${var.kubernetes_client_id}"
-    client_secret = "${var.kubernetes_client_secret}"
-  }
+  # service_principal {
+  #   client_id     = "${var.kubernetes_client_id}"
+  #   client_secret = "${var.kubernetes_client_secret}"
+  # }
 
   role_based_access_control {
     enabled = true
