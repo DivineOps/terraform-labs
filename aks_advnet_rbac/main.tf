@@ -20,7 +20,7 @@ provider "azurerm" {
 }
 
 resource "azurerm_resource_group" "test" {
-  name     = "${var.prefix}-aks-rg"
+  name     = "${var.PREFIX}-aks-rg"
   location = "${var.LOCATION}"
 }
 
@@ -43,7 +43,7 @@ PARAMETERS
 
 #Uncomment below if you need a Route Table (UDR) to route to an Netwokr Virtual Appliamce (Palo Alto, F5, Barricuda, Cisco ASR, etc) in a peered VNET
 # resource "azurerm_route_table" "test" {
-#   name                = "${var.prefix}-routetable"
+#   name                = "${var.PREFIX}-routetable"
 #   location            = "${azurerm_resource_group.test.location}"
 #   resource_group_name = "${azurerm_resource_group.test.name}"
 
@@ -56,7 +56,7 @@ PARAMETERS
 # }
 
 # resource "azurerm_log_analytics_workspace" "test" {
-#   name                = "${var.prefix}-law"
+#   name                = "${var.PREFIX}-law"
 #   location            = "${azurerm_resource_group.test.location}"
 #   resource_group_name = "${azurerm_resource_group.test.name}"
 #   sku                 = "Free"
@@ -76,7 +76,7 @@ PARAMETERS
 # }
 
 resource "azurerm_virtual_network" "test" {
-  name                = "${var.prefix}-network"
+  name                = "${var.PREFIX}-network"
   location            = "${azurerm_resource_group.test.location}"
   resource_group_name = "${azurerm_resource_group.test.name}"
   address_space       = ["${var.vnetIPCIDR}"]
@@ -99,9 +99,9 @@ resource "azurerm_subnet" "test" {
 # }
 
 resource "azurerm_kubernetes_cluster" "test" {
-  name                = "${var.prefix}-aks"
+  name                = "${var.PREFIX}-aks"
   location            = "${azurerm_resource_group.test.location}"
-  dns_prefix          = "${var.prefix}-aks"
+  dns_prefix          = "${var.PREFIX}-aks"
   resource_group_name = "${azurerm_resource_group.test.name}"
   kubernetes_version = "${var.k8sVer}"
 
