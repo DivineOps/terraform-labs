@@ -4,7 +4,6 @@ variable "prefix" {
 }
 
 variable "location" {
-  default     = "West US"
   description = "The Azure Region in which all resources in this example should be provisioned"
 }
 
