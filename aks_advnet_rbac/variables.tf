@@ -1,5 +1,5 @@
 variable "prefix" {
-  default = TF_VAR_PREFIX
+  default = "airlift"
   description = "A prefix used for all resources in this example"
 }
 
