@@ -21,7 +21,7 @@ provider "azurerm" {
 
 resource "azurerm_resource_group" "test" {
   name     = "${var.prefix}-aks-rg"
-  location = "${var.location}"
+  location = "${var.LOCATION}"
 }
 
 resource "azurerm_policy_assignment" "test" {
@@ -35,7 +35,7 @@ resource "azurerm_policy_assignment" "test" {
   parameters = <<PARAMETERS
   {
     "allowedLocations": {
-      "value": [ "${var.location}" ]
+      "value": [ "${var.LOCATION}" ]
     }
   }
 PARAMETERS
