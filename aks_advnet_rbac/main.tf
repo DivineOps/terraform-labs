@@ -13,7 +13,6 @@ terraform {
 
 provider "azurerm" {
   version = "~>1.30.1"
-
   # Use environment variables for secrets and GUIDs
 
 }
@@ -124,10 +123,8 @@ resource "azurerm_kubernetes_cluster" "test" {
   }
 
   service_principal {
-    
-    # Needed for RBAC 
-
-    # Use environment variables for secrets and GUIDs
+    client_id     = "${var.ARM_CLIENT_ID}"
+    client_secret = "${var.ARM_CLIENT_SECRET}"
   }
 
   role_based_access_control {

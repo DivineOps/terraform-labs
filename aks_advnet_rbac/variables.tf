@@ -11,29 +11,26 @@ variable "k8sVer" {
   description = "The version of Kubernetes you want deployed to your cluster. Please reference the command: az aks get-versions --location eastus -o table"
 }
 
-variable "kubernetes_client_id" {
-  default = "#{ARM_CLIENT_ID}#"
+variable "ARM_CLIENT_ID" {
   description = "The Client ID for the Service Principal to use for this Managed Kubernetes Cluster"
 }
 
-variable "kubernetes_client_secret" {
-  default = "#{ARM_CLIENT_SECRET}#"
+variable "ARM_CLIENT_SECRET" {
   description = "The Client Secret for the Service Principal to use for this Managed Kubernetes Cluster"
 }
 
-variable "kubernetes_subscription_id" {
-  default = "#{ARM_SUBSCRIPTION_ID}#"
-  description = "The Client Secret for the Service Principal to use for this Managed Kubernetes Cluster"
-}
+# variable "kubernetes_subscription_id" {
+#   default = "#{ARM_SUBSCRIPTION_ID}#"
+#   description = "The Client Secret for the Service Principal to use for this Managed Kubernetes Cluster"
+# }
 
-variable "kubernetes_tenant_id" {
-  default = "#{ARM_TENANT_ID}#"
-  description = "The Client Secret for the Service Principal to use for this Managed Kubernetes Cluster"
-}
+# variable "kubernetes_tenant_id" {
+#   default = "#{ARM_TENANT_ID}#"
+#   description = "The Client Secret for the Service Principal to use for this Managed Kubernetes Cluster"
+# }
 
-variable "public_ssh_key_path" {
+variable "ADMIN_SSH" {
   description = "The Path at which your Public SSH Key is located. Defaults to ~/.ssh/id_rsa.pub"
-  default     = "#{ADMIN_SSH}#"
 }
 
 variable "vnetIPCIDR" {
