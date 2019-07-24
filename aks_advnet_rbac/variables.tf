@@ -1,5 +1,5 @@
 variable "prefix" {
-  default = "$(PREFIX)"
+  default = TF_VAR_PREFIX
   description = "A prefix used for all resources in this example"
 }
 
