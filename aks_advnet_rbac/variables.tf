@@ -11,10 +11,6 @@ variable "k8sVer" {
   description = "The version of Kubernetes you want deployed to your cluster. Please reference the command: az aks get-versions --location eastus -o table"
 }
 
-variable "STATE_STORAGE" {
-  description = "The name of the Azure Storage Account for keeping the terraform state"
-}
-
 variable "ARM_CLIENT_ID" {
   description = "The Client ID for the Service Principal to use for this Managed Kubernetes Cluster"
 }
