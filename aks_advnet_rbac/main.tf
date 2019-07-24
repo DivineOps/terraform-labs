@@ -107,7 +107,7 @@ resource "azurerm_kubernetes_cluster" "test" {
     admin_username = "${var.osAdminUser}"
 
     ssh_key {
-      key_data = "${var.public_ssh_key_path}"
+      key_data = "${var.ADMIN_SSH}"
     }
   }
 
