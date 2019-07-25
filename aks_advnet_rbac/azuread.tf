@@ -3,7 +3,7 @@ resource "azuread_application" "test" {
 }
 
 resource "azuread_service_principal" "test" {
-  application_id = "${azuread_application.default.application_id}"
+  application_id = "${azuread_application.test.application_id}"
 }
 
 resource "random_string" "password" {
