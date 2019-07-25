@@ -1,3 +1,5 @@
+data "azurerm_subscription" "current" {}
+
 resource "azuread_application" "test" {
   name = "${var.PREFIX}-aks-sp"
 }
