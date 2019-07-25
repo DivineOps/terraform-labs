@@ -49,21 +49,21 @@ Expected in the [variables.tf](/aks_advnet_rbac/variables.tf) file:
 ### Reserved Terraform environment variable names:
 ARM_ACCESS_KEY - the storage access key for the terraform state (used by the   backend "azurerm" block)
 
-ARM_CLIENT_ID - The Client ID for the Service Principal to use for this Managed Kubernetes Cluster (used by the provider "azurerm" block)
+ARM_CLIENT_ID - The Client ID (appId) for the Service Principal to use for this Managed Kubernetes Cluster (used by the provider "azurerm" block)
 
-ARM_CLIENT_SECRET - The Client Secret for the Service Principal to use for this Managed Kubernetes Cluster (used by the provider "azurerm" block) 
+ARM_CLIENT_SECRET - The Client Secret (password) for the Service Principal to use for this Managed Kubernetes Cluster (used by the provider "azurerm" block) 
 
 ARM_SUBSCRIPTION_ID - your Subscription ID (used by the provider "azurerm" block) 
 
-ARM_TENANT_ID - your Tenant ID (used by the provider "azurerm" block) 
+ARM_TENANT_ID - your Tenant ID (tenant) (used by the provider "azurerm" block) 
 
 
 ### TF_VAR_ environment variable names 
 (The environment variable should be defined with the TF_VAR_ prefix, but used without the TF_VAR_ prefix in the variables.tf)
 
-TF_VAR_ARM_CLIENT_ID - The Client ID for the Service Principal to use for this Managed Kubernetes Cluster (used by the service_principal block)
+TF_VAR_ARM_CLIENT_ID - The Client ID (appId) for the Service Principal to use for this Managed Kubernetes Cluster (used by the service_principal block)
 
-TF_VAR_ARM_CLIENT_SECRET - The Client Secret for the Service Principal to use for this Managed Kubernetes Cluster (used by the service_principal block)
+TF_VAR_ARM_CLIENT_SECRET - The Client Secret (password) for the Service Principal to use for this Managed Kubernetes Cluster (used by the service_principal block)
 
 TF_VAR_PREFIX - A prefix used for all resource names in this example
 
