@@ -126,8 +126,8 @@ resource "azurerm_kubernetes_cluster" "test" {
   }
 
   service_principal {
-    client_id     = "${azuread_application.default.application_id}"
-    client_secret = "${azuread_service_principal_password.default.value}"
+    client_id     = "${azuread_application.test.application_id}"
+    client_secret = "${azuread_service_principal_password.test.value}"
   }
 
   role_based_access_control {
