@@ -26,8 +26,8 @@ stages:
         backendStateFileKey: 'terraform-labs.terraform.tfstate'
         workingDirectory: $(System.DefaultWorkingDirectory)/aks_advnet_rbac/
         script: |
-          EXPORT TF_VAR_ARM_CLIENT_ID=$ARM_CLIENT_ID
-          EXPORT TF_VAR_ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET
+          export TF_VAR_ARM_CLIENT_ID=$ARM_CLIENT_ID
+          export TF_VAR_ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET
 
           terraform plan -input=false
           terraform apply -auto-approve -input=false
