@@ -1,0 +1,40 @@
+
+trigger:
+- none
+
+resources:
+- repo: self
+
+variables:
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+
+stages:    
+- stage: Deploy
+  displayName: Deploy Stage
+  jobs:
+  - job: Deploy
+    displayName: Deploy
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - checkout: self
+    - task: terraformcli@0
+      inputs:
+        targetAzureSubscription: $(serviceConnectionName)
+        targetStorageAccountName: mtcdenterraformsandbox
+        backendStateFileKey: 'terraform-labs.terraform.tfstate'
+        workingDirectory: $(System.DefaultWorkingDirectory)/aks_advnet_rbac/
+        script: |
+          # Output all commands run and fail if any fail
+          set -e -x
+
+          # Generate a terraform plan file
+          terraform plan \
+            -input=false \
+            -var="ARM_CLIENT_ID=${ARM_CLIENT_ID}" \
+            -var="ARM_CLIENT_SECRET=${ARM_CLIENT_SECRET}" \
+            -out=plan.tfplan
+          
+          # Apply the terraform plan
+          terraform apply plan.tfplan
