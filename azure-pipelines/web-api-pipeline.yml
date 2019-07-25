@@ -95,7 +95,7 @@ stages:
               azureResourceGroup: '$(azureResourceGroup)'
               kubernetesCluster: '$(kubernetesCluster)'
               command: init
-              upgradeTiller: false
+              upgradeTiller: true
               arguments: '--service-account tiller'
               tillerNamespace: 'kube-system'
 
