@@ -1,4 +1,3 @@
-
 trigger:
 - none
 
@@ -29,16 +28,15 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
-                export TF_VAR_ARM_CLIENT_ID=$ARM_CLIENT_ID
-                export TF_VAR_ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET
+                # Output all commands run and fail if any fail
+                set -e -x
 
-                cd aks_advnet_rbac
-                
-                terraform init -input=false
-                terraform plan -input=false
-                terraform apply -auto-approve -input=false
+                # Generate a terraform plan file
+                terraform plan \
+                  -input=false \
+                  -var="ARM_CLIENT_ID=${ARM_CLIENT_ID}" \
+                  -var="ARM_CLIENT_SECRET=${ARM_CLIENT_SECRET}" \
+                  -out=plan.tfplan
 
-          
-                
-                
-        
+                # Apply the terraform plan
+                terraform apply plan.tfplan
