@@ -13,27 +13,19 @@ stages:
 - stage: Deploy
   displayName: Deploy Stage
   jobs:
-  - deployment: Deploy
+  - job: Deploy
     displayName: Deploy
     pool:
       vmImage: $(vmImageName)
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - checkout: self
-          - task: terraformcli@0
-            inputs:
-              targetAzureSubscription: $(serviceConnectionName)
-              targetStorageAccountName: mtcdenterraformsandbox
-              backendStateFileKey: 'terraform-labs.terraform.tfstate'
-              workingDirectory: $(System.DefaultWorkingDirectory)/aks_advnet_rbac/
-              script: |
-                terraform init
-                terraform plan -input=false
-                terraform apply -auto-approve
-
-          
-                
-                
-        
+    steps:
+    - checkout: self
+    - task: terraformcli@0
+      inputs:
+        targetAzureSubscription: $(serviceConnectionName)
+        targetStorageAccountName: mtcdenterraformsandbox
+        backendStateFileKey: 'terraform-labs.terraform.tfstate'
+        workingDirectory: $(System.DefaultWorkingDirectory)/aks_advnet_rbac/
+        script: |
+          terraform init
+          terraform plan
+          terraform apply -auto-approve
