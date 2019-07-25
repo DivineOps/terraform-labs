@@ -40,7 +40,6 @@ stages:
                   -input=false \
                   -var="ARM_CLIENT_ID=${ARM_CLIENT_ID}" \
                   -var="ARM_CLIENT_SECRET=${ARM_CLIENT_SECRET}" \
-                  -backend-config="storage_account_name=${TFSTATE_STORAGE}" \
                   -out=plan.tfplan
 
                 # Apply the terraform plan
