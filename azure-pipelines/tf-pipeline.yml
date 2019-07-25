@@ -29,7 +29,9 @@ stages:
             inputs:
               targetType: 'inline'
               script: |
-                
+                export TF_VAR_ARM_CLIENT_ID=$ARM_CLIENT_ID
+                export TF_VAR_ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET
+
                 cd aks_advnet_rbac
                 
                 terraform init -input=false
