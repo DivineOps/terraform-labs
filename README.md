@@ -38,6 +38,7 @@ Use the following commands to create the storage account for the Terraform state
 ```
 az group create -n MyResourceGroup -l MyLocation
 az storage account create -n MyStorageAccount -g MyResourceGroup -l MyLocation --sku Standard_LRS
+az storage account keys list -n MyStorageAccount
 ```
 
 After the account has been created, update the storage_account_name attribute in backend "azurerm" block in [main.tf](/aks_advnet_rbac/main.tf) to the new storage account name. Update the ARM_ACCESS_KEY environment variable to the new account access key. 
