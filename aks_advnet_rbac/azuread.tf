@@ -1,7 +1,7 @@
 data "azurerm_subscription" "current" {}
 
 resource "azuread_application" "test" {
-  name = "${var.name}-${var.environment}"
+  name = "${var.PREFIX}-app"
 }
 
 resource "azuread_service_principal" "test" {
