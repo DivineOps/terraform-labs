@@ -26,5 +26,9 @@ stages:
         backendStateFileKey: 'terraform-labs.terraform.tfstate'
         workingDirectory: $(System.DefaultWorkingDirectory)/aks_advnet_rbac/
         script: |
-          terraform plan -input=false
+          terraform plan \
+              -input=false
+              -var="ARM_CLIENT_ID=$ARM_CLIENT_ID"
+              -var="ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET"
+          
           terraform apply -auto-approve -input=false
