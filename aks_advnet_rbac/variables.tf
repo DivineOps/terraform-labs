@@ -15,14 +15,6 @@ variable "ADMIN_SSH" {
   description = "The Path at which your Public SSH Key is located. Defaults to ~/.ssh/id_rsa.pub"
 }
 
-variable "ARM_CLIENT_ID" {
-  description = "The Client ID for the Service Principal to use for this Managed Kubernetes Cluster"
-}
-
-variable "ARM_CLIENT_SECRET" {
-  description = "The Client Secret for the Service Principal to use for this Managed Kubernetes Cluster"
-}
-
 variable "vnetIPCIDR" {
   default = "172.20.0.0/16"
   description = "The IP address CIDR block to be assigned to the entride Azure Virtual Network. If connecting to another peer or to you On-Premises netwokr this CIDR block MUST NOT overlap with existing BGP learned routes"
