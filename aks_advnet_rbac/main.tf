@@ -126,11 +126,10 @@ resource "azurerm_kubernetes_cluster" "test" {
   }
 
   service_principal {
-    # The Service Principal is used by terraform to authenticate the script commands (terraforn init, plan, apply etc.)
-    # Unforunately the reserved names ARM_CLIENT_ID and ARM_CLIENT_SECRET are not allowed here
-    # Instead we are using TF_VAR_ARM_CLIENT_ID
-    client_id     = "${var.ARM_CLIENT_ID}"
-    client_secret = "${var.ARM_CLIENT_SECRET}"
+    # Used for the AKS cluster
+    # Uses the azuread.tf
+    client_id     = "${azuread_application.default.application_id}"
+    client_secret = "${azuread_service_principal_password.default.value}"
   }
 
   role_based_access_control {
