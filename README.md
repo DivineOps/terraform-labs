@@ -61,10 +61,6 @@ ARM_TENANT_ID - your Tenant ID (tenant) (used by the provider "azurerm" block)
 ### TF_VAR_ environment variable names 
 (The environment variable should be defined with the TF_VAR_ prefix, but used without the TF_VAR_ prefix in the variables.tf)
 
-TF_VAR_ARM_CLIENT_ID - The Client ID (appId) for the Service Principal to use for this Managed Kubernetes Cluster (used by the service_principal block)
-
-TF_VAR_ARM_CLIENT_SECRET - The Client Secret (password) for the Service Principal to use for this Managed Kubernetes Cluster (used by the service_principal block)
-
 TF_VAR_PREFIX - A prefix used for all resource names in this example
 
 TF_VAR_LOCATION - The Azure Region in which all resources in this example should be provisioned
@@ -78,7 +74,11 @@ TF_VAR_ADMIN_SSH - Your SSH public key for the AKS cluster
 To run the Terraform file on a local machine or in Azure Pipelines:
 
 ```
+export TF_VAR_ARM_CLIENT_ID=$ARM_CLIENT_ID
+export TF_VAR_ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET
+                
 cd aks_advnet_rbac
+
 terraform init -input=false
 terraform plan -input=false
 terraform apply -auto-approve -input=false
