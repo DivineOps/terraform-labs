@@ -20,6 +20,8 @@ provider "azurerm" {
 
 }
 
+data "azurerm_client_config" "current" {}
+
 resource "azurerm_resource_group" "test" {
   name     = "${var.PREFIX}-aks-rg"
   location = "${var.LOCATION}"
@@ -126,8 +128,8 @@ resource "azurerm_kubernetes_cluster" "test" {
   }
 
   service_principal {
-    client_id     = "${azuread_application.test.application_id}"
-    client_secret = "${azuread_service_principal_password.test.value}"
+    client_id     = "${env.ARM_CLIENT_ID}"
+    client_secret = "${env.ARM_CLIENT_SECRET}"
   }
 
   role_based_access_control {
