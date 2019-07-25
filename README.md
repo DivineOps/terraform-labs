@@ -9,7 +9,7 @@ For best results ensure you have the latest Terraform for your workstation or us
 
 
 ### Create the Service Principal
-To run Terraform in Azure Pipelines (unless using the TODO task) you will need to provide the AAD Service Principal information. To create the Service Principal, run the following commands on your local machine:
+To run Terraform in Azure Pipelines (unless using the new [Terraform CLI](https://marketplace.visualstudio.com/items?itemName=jlorich.TerraformCli) task) you will need to provide the AAD Service Principal information. To create the Service Principal, run the following commands on your local machine:
 
 ```
 az login
@@ -31,10 +31,16 @@ The output is similar to the following example. Make a note of your own `appId`,
 
 ### Create the Storage Account for Terraform state
 
+Terraform persists a state file, allowing it to update . The backend "azurerm" block is used to configure the storage account target. 
+
+Use the following commands to create the storage account for the Terraform state. Use a *different* resource group than the one the AKS resources will be deployed to. 
+
 ```
 az group create -n MyResourceGroup -l MyLocation
 az storage account create -n MyStorageAccount -g MyResourceGroup -l MyLocation --sku Standard_LRS
 ```
+
+After the account has been created, update the storage_account_name attribute in backend "azurerm" block in [main.tf](/aks_advnet_rbac/main.tf) to the new storage account name. Update the ARM_ACCESS_KEY environment variable to the new account access key. 
 
 ## Environment variables 
 Expected in the [variables.tf](/aks_advnet_rbac/variables.tf) file:
@@ -74,31 +80,8 @@ To run the Terraform file on a local machine or in Azure Pipelines:
 
 ```
 cd aks_advnet_rbac
-terraform init
-terraform plan
-terraform apply -auto-approve
+terraform init -input=false
+terraform plan -input=false
+terraform apply -auto-approve -input=false
 ```
 
-
-### License
-MIT License
-
-Copyright (c) 2019 Eddie Villalba, Sasha Rosenbaum
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
