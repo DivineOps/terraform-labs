@@ -67,20 +67,30 @@ TF_VAR_LOCATION - The Azure Region in which all resources in this example should
 
 TF_VAR_ADMIN_SSH - Your SSH public key for the AKS cluster
 
+### Pipeline variable
+TFSTATE_STORAGE - The name of the storage account where the Terraform state is kept (passed as an input into `terraform init`)
 
 
 ## Running Terraform
 
 To run the Terraform file on a local machine or in Azure Pipelines:
 
-```
-export TF_VAR_ARM_CLIENT_ID=$ARM_CLIENT_ID
-export TF_VAR_ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET
-                
+```      
+# Output all commands run and fail if any fail
+set -e -x
+
 cd aks_advnet_rbac
 
-terraform init -input=false
-terraform plan -input=false
-terraform apply -auto-approve -input=false
+terraform init -backend-config="storage_account_name=$(TFSTATE_STORAGE)"
+
+# Generate a terraform plan file
+terraform plan \
+  -input=false \
+  -var="ARM_CLIENT_ID=${ARM_CLIENT_ID}" \
+  -var="ARM_CLIENT_SECRET=${ARM_CLIENT_SECRET}" \
+  -out=plan.tfplan
+  
+# Apply the terraform plan
+terraform apply plan.tfplan
 ```
 
