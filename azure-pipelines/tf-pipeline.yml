@@ -29,7 +29,7 @@ stages:
           terraform plan \
             -input=false \
             -var="ARM_CLIENT_ID=${ARM_CLIENT_ID}" \
-            -var="ARM_CLIENT_SECRET=${ARM_CLIENT_SECRET}"
+            -var="ARM_CLIENT_SECRET=${ARM_CLIENT_SECRET}" \
             -out=plan.tfplan
           
           terraform apply plan.tfplan
