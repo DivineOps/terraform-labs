@@ -13,7 +13,7 @@ To run Terraform in Azure Pipelines (unless using the new [Terraform CLI](https:
 
 ```
 az login
-azure account set -s {SubscriptionId}
+azure account set -s MySubscriptionId
 az ad sp create-for-rbac
 ```
 
