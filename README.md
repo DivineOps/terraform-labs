@@ -21,11 +21,11 @@ The output is similar to the following example. Make a note of your own `appId`,
 
 ```json
 {
-  "appId": "559513bd-0c19-4c1a-87cd-851a26afd5fc",
+  "appId": "XXXXXXXX-0c19-4c1a-87cd-851a26afd5fc",
   "displayName": "azure-cli-2018-09-25-21-10-19",
   "name": "http://azure-cli-2018-09-25-21-10-19",
-  "password": "e763725a-5eee-40e8-a466-dc88d980f415",
-  "tenant": "72f988bf-86f1-41af-91ab-2d7cd011db48"
+  "password": "XXXXXXXX-5eee-40e8-a466-dc88d980f415",
+  "tenant": "XXXXXXXX-86f1-41af-91ab-2d7cd011db48"
 }
 ```
 
