@@ -31,6 +31,10 @@ stages:
                 # Output all commands run and fail if any fail
                 set -e -x
 
+                cd aks_advnet_rbac
+
+                terraform init -input=false
+
                 # Generate a terraform plan file
                 terraform plan \
                   -input=false \
