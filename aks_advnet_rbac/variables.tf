@@ -20,7 +20,7 @@ variable "ARM_CLIENT_SECRET" {
 }
 
 variable "ADMIN_SSH" {
-  description = "The Path at which your Public SSH Key is located. Defaults to ~/.ssh/id_rsa.pub"
+  description = "Your SSH public key for the AKS cluster"
 }
 
 variable "vnetIPCIDR" {
