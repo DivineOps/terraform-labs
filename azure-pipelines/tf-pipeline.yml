@@ -31,6 +31,8 @@ stages:
                 # Output all commands run and fail if any fail
                 set -e -x
 
+                echo $(TFSTATE_STORAGE)
+                
                 cd aks_advnet_rbac
 
                 terraform init -backend-config="storage_account_name=${TFSTATE_STORAGE}"
