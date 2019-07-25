@@ -33,7 +33,11 @@ stages:
                 
                 cd aks_advnet_rbac
 
-                terraform init -backend-config="storage_account_name=${TFSTATE_STORAGE}"
+                terraform init \
+                  -backend-config="storage_account_name=${TFSTATE_STORAGE}" \
+                  -backend-config="access_key=${ARM_ACCESS_KEY}" \
+                  -backend-config="container_name=tfstate" 
+                  
 
                 # Generate a terraform plan file
                 terraform plan \
