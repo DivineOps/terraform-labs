@@ -18,7 +18,7 @@ stages:
     displayName: Deploy
     pool:
       vmImage: $(vmImageName)
-    environment: 'DivineOpsterraformlabs'
+    environment: 'terraform'
     strategy:
       runOnce:
         deploy:
