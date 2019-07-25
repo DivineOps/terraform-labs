@@ -27,8 +27,9 @@ stages:
         workingDirectory: $(System.DefaultWorkingDirectory)/aks_advnet_rbac/
         script: |
           terraform plan \
-              -input=false \
-              -var="ARM_CLIENT_ID=${ARM_CLIENT_ID}" \
-              -var="ARM_CLIENT_SECRET=${ARM_CLIENT_SECRET}"
+            -input=false \
+            -var="ARM_CLIENT_ID=${ARM_CLIENT_ID}" \
+            -var="ARM_CLIENT_SECRET=${ARM_CLIENT_SECRET}"
+            -out=plan.tfplan
           
-          terraform apply -auto-approve -input=false
+          terraform apply plan.tfplan
