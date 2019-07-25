@@ -75,8 +75,6 @@ TF_VAR_ADMIN_SSH - Your SSH public key for the AKS cluster
 
 ## Running Terraform
 
-Initialize your Terraform to get the latest plugins needed
-
 To run the Terraform file on a local machine or in Azure Pipelines:
 
 ```
