@@ -4,8 +4,6 @@ terraform {
 
   backend "azurerm" {
 
-    # Unfortunately variables are not allowed for storage_account_name, change this to your unique storage account
-    storage_account_name = "tfstateazdo"
     container_name       = "tfstate"
     key                  = "prod.terraform.tfstate"
 
