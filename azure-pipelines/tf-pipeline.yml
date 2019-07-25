@@ -6,7 +6,6 @@ resources:
 - repo: self
 
 variables:
-
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
@@ -18,25 +17,18 @@ stages:
     displayName: Deploy
     pool:
       vmImage: $(vmImageName)
-    environment: 'DivineOpsterraformlabs.default'
     strategy:
       runOnce:
         deploy:
           steps:
           - checkout: self
-          
-          - task: Bash@3
+          - task: terraformcli@0
             inputs:
-              targetType: 'inline'
+              targetAzureSubscription: $(serviceConnectionName)
+              targetStorageAccountName: mtcdenterraformsandbox
+              backendStateFileKey: 'terraform-labs.terraform.tfstate'
+              workingDirectory: $(System.DefaultWorkingDirectory)/aks_advnet_rbac/
               script: |
-                
-                cd aks_advnet_rbac
-                
                 terraform init
                 terraform plan
                 terraform apply -auto-approve
-
-          
-                
-                
-        
