@@ -33,3 +33,10 @@ resource "kubernetes_cluster_role_binding" "tiller" {
     namespace = "kube-system"
   }
 }
+
+resource "kubernetes_namespace" "golang-app" {
+  metadata {
+
+    name = "golang-app"
+  }
+}
